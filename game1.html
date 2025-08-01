@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Kindergarten Counting Adventure</title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
+  <link rel="stylesheet" href="assets/css/game1.css">
+</head>
+<body>
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="assets/images/logo.png" alt="Counting Adventure Logo">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="#games">Games</a></li>
+              <li><a href="record.html">Record<img src="assets/images/profile.png" alt="Kid Profile"></a></li>
+            </ul>
+            <a class="menu-trigger">
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+          <!-- ***** Game Area Start ***** -->
+          <div class="game-container">
+            <div class="level-display" id="level-display">Level: <span id="level-counter">1</span>/3</div>
+            <div class="game-area">
+              <!-- Math Question -->
+              <div class="math-question">
+                <span id="num1"></span> + <span id="num2"></span> = 
+                <div id="answer-box" class="answer-box dashed-box"></div>
+                <button id="confirm-button">確認</button>
+              </div>
+              <!-- Number Grid -->
+              <div class="number-grid">
+                <div class="number-cell" data-number="1">1</div>
+                <div class="number-cell" data-number="2">2</div>
+                <div class="number-cell" data-number="3">3</div>
+                <div class="number-cell" data-number="4">4</div>
+                <div class="number-cell" data-number="5">5</div>
+                <div class="number-cell" data-number="6">6</div>
+                <div class="number-cell" data-number="7">7</div>
+                <div class="number-cell" data-number="8">8</div>
+                <div class="number-cell" data-number="9">9</div>
+              </div>
+              <!-- Radish Area -->
+              <div class="radish-area">
+                <div class="radish-row top-row">
+                  <img class="radish" data-index="0" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="1" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="2" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="3" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="4" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                </div>
+                <div class="radish-row bottom-row">
+                  <img class="radish" data-index="5" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="6" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="7" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="8" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                  <img class="radish" data-index="9" src="assets/images/radishes.png" alt="Radish" draggable="true">
+                </div>
+              </div>
+              <!-- Bucket -->
+              <div class="bucket-area">
+                <div id="bucket-radishes"></div>
+                <img id="bucket" src="assets/images/bucket.png" alt="Bucket">
+              </div>
+              <!-- Feedback -->
+              <div id="feedback" class="feedback"></div>
+            </div>
+            <!-- Game Complete -->
+            <div id="game-complete" class="game-complete">
+              <h2>恭喜完成遊戲！</h2>
+              <button onclick="window.location.href='index.html'">回到主頁</button>
+            </div>
+          </div>
+          <!-- ***** Game Area End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/popup.js"></script>
+  <script src="assets/js/custom.js"></script>
+
+  <!-- Game Logic JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let num1, num2, correctAnswer;
+      let radishCount = 0;
+      let selectedNumber = null;
+      let currentLevel = 1;
+      const maxLevels = 3;
+      const maxRadishes = 10;
+
+      // Update level display color
+      function updateLevelDisplay() {
+        const levelDisplay = document.getElementById('level-display');
+        levelDisplay.className = `level-display level-${currentLevel}`;
+        document.getElementById('level-counter').textContent = currentLevel;
+      }
+
+      // Generate new math question
+      function generateQuestion() {
+        do {
+          num1 = Math.floor(Math.random() * 9) + 1; // 1-9
+          num2 = Math.floor(Math.random() * 9) + 1; // 1-9
+          correctAnswer = num1 + num2;
+        } while (correctAnswer > 9); // Ensure answer <= 9
+
+        document.getElementById('num1').textContent = num1;
+        document.getElementById('num2').textContent = num2;
+        document.getElementById('answer-box').textContent = '';
+        document.getElementById('bucket-radishes').innerHTML = '';
+        radishCount = 0;
+        selectedNumber = null;
+
+        // Reset radishes
+        const radishes = document.querySelectorAll('.radish');
+        radishes.forEach(radish => {
+          radish.style.display = 'block';
+          radish.setAttribute('draggable', 'true');
+        });
+
+        // Reset number grid
+        const numberCells = document.querySelectorAll('.number-cell');
+        numberCells.forEach(cell => {
+          cell.setAttribute('draggable', 'true');
+        });
+
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('game-complete').style.display = 'none';
+        updateLevelDisplay();
+      }
+
+      // Initialize drag and drop for radishes
+      const radishes = document.querySelectorAll('.radish');
+      const bucket = document.getElementById('bucket');
+      const radishArea = document.querySelector('.radish-area');
+
+      radishes.forEach(radish => {
+        radish.addEventListener('dragstart', () => {
+          radish.classList.add('dragging');
+        });
+
+        radish.addEventListener('dragend', () => {
+          radish.classList.remove('dragging');
+        });
+      });
+
+      bucket.addEventListener('dragover', e => {
+        e.preventDefault();
+      });
+
+      bucket.addEventListener('drop', e => {
+        e.preventDefault();
+        const draggedRadish = document.querySelector('.radish.dragging');
+        if (draggedRadish && radishCount < maxRadishes) {
+          const index = draggedRadish.getAttribute('data-index');
+          draggedRadish.style.display = 'none';
+          draggedRadish.setAttribute('draggable', 'false');
+          radishCount++;
+
+          // Add radish to bucket
+          const bucketRadish = document.createElement('img');
+          bucketRadish.src = 'assets/images/radishes.png';
+          bucketRadish.className = 'bucket-radish';
+          bucketRadish.setAttribute('data-index', index);
+          bucketRadish.setAttribute('draggable', 'true');
+          document.getElementById('bucket-radishes').appendChild(bucketRadish);
+
+          // Enable drag back
+          bucketRadish.addEventListener('dragstart', () => {
+            bucketRadish.classList.add('dragging');
+          });
+
+          bucketRadish.addEventListener('dragend', () => {
+            bucketRadish.classList.remove('dragging');
+          });
+        }
+      });
+
+      // Drag back to radish area
+      radishArea.addEventListener('dragover', e => {
+        e.preventDefault();
+      });
+
+      radishArea.addEventListener('drop', e => {
+        e.preventDefault();
+        const draggedRadish = document.querySelector('.bucket-radish.dragging');
+        if (draggedRadish) {
+          const index = draggedRadish.getAttribute('data-index');
+          const originalRadish = document.querySelector(`.radish[data-index="${index}"]`);
+          originalRadish.style.display = 'block';
+          originalRadish.setAttribute('draggable', 'true');
+          draggedRadish.remove();
+          radishCount--;
+        }
+      });
+
+      // Initialize drag and drop for numbers
+      const numberCells = document.querySelectorAll('.number-cell');
+      const answerBox = document.getElementById('answer-box');
+
+      numberCells.forEach(cell => {
+        cell.addEventListener('dragstart', () => {
+          cell.classList.add('dragging');
+        });
+
+        cell.addEventListener('dragend', () => {
+          cell.classList.remove('dragging');
+        });
+      });
+
+      answerBox.addEventListener('dragover', e => {
+        e.preventDefault();
+      });
+
+      answerBox.addEventListener('drop', e => {
+        e.preventDefault();
+        const draggedCell = document.querySelector('.number-cell.dragging');
+        if (draggedCell) {
+          selectedNumber = parseInt(draggedCell.getAttribute('data-number'));
+          answerBox.textContent = selectedNumber;
+        }
+      });
+
+      // Confirm button click
+      document.getElementById('confirm-button').addEventListener('click', () => {
+        if (selectedNumber !== null) {
+          checkAnswer(selectedNumber);
+        } else {
+          const feedback = document.getElementById('feedback');
+          feedback.textContent = '請選擇一個數字！';
+          feedback.className = 'feedback incorrect';
+          feedback.style.display = 'block';
+          setTimeout(() => {
+            feedback.style.display = 'none';
+          }, 2000);
+        }
+      });
+
+      // Check if the answer is correct
+      function checkAnswer(number) {
+        const feedback = document.getElementById('feedback');
+        const audio = new Audio();
+
+        if (number === correctAnswer && radishCount === correctAnswer) {
+          feedback.textContent = '答對了！';
+          feedback.className = 'feedback correct';
+          audio.src = 'assets/audio/suc.mp3';
+          audio.play();
+
+          // Check if game is complete
+          if (currentLevel < maxLevels) {
+            currentLevel++;
+            setTimeout(generateQuestion, 2000); // Next level
+          } else {
+            setTimeout(() => {
+              document.getElementById('game-complete').style.display = 'block';
+              document.querySelector('.game-area').style.pointerEvents = 'none'; // Disable interactions
+            }, 2000);
+          }
+        } else {
+          feedback.textContent = '答錯了！';
+          feedback.className = 'feedback incorrect';
+          audio.src = 'assets/audio/err.mp3';
+          audio.play();
+          setTimeout(() => {
+            feedback.style.display = 'none';
+          }, 2000);
+        }
+      }
+
+      // Smooth scrolling for games link
+      const gamesLink = document.querySelector('a[href="#games"]');
+      if (gamesLink) {
+        gamesLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          const targetSection = document.querySelector('.game-container');
+          if (targetSection) {
+            targetSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      }
+
+      // Start the game
+      generateQuestion();
+    });
+  </script>
+</body>
+</html>

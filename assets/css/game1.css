@@ -1,0 +1,336 @@
+/* Game Container */
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+/* Level Display */
+.level-display {
+  position: absolute;
+  top: 130px;
+  left: 130px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Game Area */
+.game-area {
+  position: relative;
+  width: 1600px;
+  height: 600px;
+  background-image: url('../images/game1bg.png');
+  background-size: cover;
+  background-position: center;
+  border: 5px solid #4CAF50;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Math Question */
+.math-question {
+  position: absolute;
+  top: 20px;
+  left: 420px;
+  font-size: 86px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.answer-box {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.dashed-box {
+  border: 2px dashed #333;
+}
+
+#confirm-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 24px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#confirm-button:hover {
+  background-color: #45a049;
+}
+
+/* Number Grid */
+.number-grid {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  gap: 5px;
+}
+
+.number-cell {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ffeb3b, #fbc02d);
+  border: 2px solid #333;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: move;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.number-cell:hover {
+  transform: scale(1.1);
+}
+
+.number-cell.dragging {
+  opacity: 0.5;
+  transform: scale(0.9);
+}
+
+/* Radish Area */
+.radish-area {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+}
+
+.radish-row {
+  display: flex;
+  gap: 10px;
+}
+
+.radish {
+  width: 60px;
+  height: 100px;
+  cursor: move;
+  user-select: none;
+}
+
+.radish.dragging {
+  opacity: 0.5;
+}
+
+/* Bucket Area */
+.bucket-area {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#bucket {
+  width: 200px;
+  height: 200px;
+}
+
+#bucket-radishes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+
+.bucket-radish {
+  width: 30px;
+  height: 50px;
+  cursor: move;
+}
+
+/* Feedback */
+.feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.feedback.correct {
+  color: #4CAF50;
+  display: block;
+}
+
+.feedback.incorrect {
+  color: #F44336;
+  display: block;
+}
+
+/* Game Complete */
+.game-complete {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  display: none;
+}
+
+.game-complete h2 {
+  color: #4CAF50;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.game-complete button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.game-complete button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .game-container {
+    padding: 10px;
+  }
+
+  .level-display {
+    top: 5px;
+    left: 10px;
+    font-size: 16px;
+    padding: 3px 6px;
+  }
+
+  .game-area {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 3;
+  }
+
+  .math-question {
+    top: 10px;
+    left: 26.25%;
+    font-size: 36px;
+  }
+
+  .answer-box {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    font-size: 16px;
+  }
+
+  #confirm-button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+  }
+
+  .number-grid {
+    top: 10px;
+    right: 10px;
+    grid-template-columns: repeat(3, 30px);
+    gap: 3px;
+  }
+
+  .number-cell {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .radish-area {
+    padding: 10px;
+    gap: 3px;
+  }
+
+  .radish-row {
+    gap: 5px;
+  }
+
+  .radish {
+    width: 40px;
+    height: 66px;
+  }
+
+  .bucket-area {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  #bucket {
+    width: 100px;
+    height: 100px;
+  }
+
+  #bucket-radishes {
+    max-width: 100px;
+    gap: 3px;
+    margin-bottom: 5px;
+  }
+
+  .bucket-radish {
+    width: 15px;
+    height: 25px;
+  }
+
+  .feedback {
+    font-size: 24px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .game-complete {
+    padding: 10px;
+  }
+
+  .game-complete h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .game-complete button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
