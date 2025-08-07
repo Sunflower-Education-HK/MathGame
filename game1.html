@@ -58,11 +58,16 @@
         <div class="page-content">
           <!-- ***** Game Area Start ***** -->
           <div class="game-container">
-            <div class="level-display" id="level-display">Level: <span id="level-counter">1</span>/3</div>
+            <div class="level-controls">
+              <button id="lang-toggle">中/Eng</button>
+              <div class="level-display" id="level-display">Level: <span id="level-counter">1</span>/40</div>
+              <button id="reset-button">重置</button>
+            </div>
             <div class="game-area">
               <!-- Math Question -->
               <div class="math-question">
-                <span id="num1"></span> + <span id="num2"></span> = 
+                <button id="listen-again">聽多次</button>
+                <span id="num1"></span> <span id="operator">+</span> <span id="num2"></span> = 
                 <div id="answer-box" class="answer-box dashed-box"></div>
                 <button id="confirm-button">確認</button>
               </div>
@@ -100,13 +105,16 @@
                 <div id="bucket-radishes"></div>
                 <img id="bucket" src="assets/images/bucket.png" alt="Bucket">
               </div>
+              <!-- Guide Line -->
+              <div id="guide-line" class="guide-line"></div>
               <!-- Feedback -->
               <div id="feedback" class="feedback"></div>
             </div>
             <!-- Game Complete -->
             <div id="game-complete" class="game-complete">
-              <h2>恭喜完成遊戲！</h2>
-              <button onclick="window.location.href='index.html'">回到主頁</button>
+              <h2 id="complete-message">恭喜完成遊戲！</h2>
+              <button id="next-level-button" onclick="window.location.href='record.html'">去下一關</button>
+              <button id="home-button" onclick="window.location.href='index.html'">回到主頁</button>
             </div>
           </div>
           <!-- ***** Game Area End ***** -->
@@ -131,23 +139,168 @@
       let radishCount = 0;
       let selectedNumber = null;
       let currentLevel = 1;
-      const maxLevels = 3;
+      const maxLevels = 40;
       const maxRadishes = 10;
+      let currentLanguage = 'zh';
+      let totalQuestions = 0;
+      let correctQuestions = 0;
+
+      // Load saved game state
+      function loadGameState() {
+        const savedState = localStorage.getItem('gameState');
+        if (savedState) {
+          const state = JSON.parse(savedState);
+          currentLevel = state.currentLevel || 1;
+          totalQuestions = state.totalQuestions || 0;
+          correctQuestions = state.correctQuestions || 0;
+          currentLanguage = state.currentLanguage || 'zh';
+        }
+      }
+
+      // Save game state
+      function saveGameState() {
+        const state = {
+          currentLevel,
+          totalQuestions,
+          correctQuestions,
+          currentLanguage
+        };
+        localStorage.setItem('gameState', JSON.stringify(state));
+      }
+
+      // Convert number to text for speech
+      function numberToText(number, language) {
+        const numberDict = {
+          zh: {
+            1: '一', 2: '二', 3: '三', 4: '四', 5: '五',
+            6: '六', 7: '七', 8: '八', 9: '九'
+          },
+          en: {
+            1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five',
+            6: 'six', 7: 'seven', 8: 'eight', 9: 'nine'
+          }
+        };
+        return numberDict[language][number] || number.toString();
+      }
+
+      // Language dictionary
+      const langDict = {
+        zh: {
+          operator: '+',
+          confirm: '確認',
+          noRadish: '請將蘿蔔放入桶中！',
+          noNumber: '請選擇一個數字！',
+          correct: '答對了！',
+          incorrect: '答錯了！',
+          complete: '恭喜完成遊戲！',
+          nextLevel: '去下一關',
+          home: '回到主頁',
+          level: '關卡',
+          reset: '重置',
+          resetConfirm: '確定要重置遊戲記錄嗎？',
+          welcomePrompt: '歡迎嚟到計數冒險遊戲！請拖曳蘿蔔同數字去答題！',
+          questionPrompt: '題目係{num1}加{num2}，我哋要先將{num1}個紅蘿蔔放落桶',
+          secondPrompt: '而家要多{num2}個紅蘿蔔',
+          finalPrompt: '而家有幾多個紅蘿蔔呀？',
+          listenAgain: '聽一次'
+        },
+        en: {
+          operator: '+',
+          confirm: 'Confirm',
+          noRadish: 'Put radishes in the bucket!',
+          noNumber: 'Please select a number!',
+          correct: 'Correct!',
+          incorrect: 'Incorrect!',
+          complete: 'Congratulations, game completed!',
+          nextLevel: 'Next Level',
+          home: 'Back to Home',
+          level: 'Level',
+          reset: 'Reset',
+          resetConfirm: 'Are you sure you want to reset game progress?',
+          welcomePrompt: 'Welcome to the Counting Adventure Game! Please drag radishes and numbers to answer!',
+          questionPrompt: 'The question is {num1} plus {num2}, we need to put {num1} radish{num1s} in the bucket first',
+          secondPrompt: 'Now we need {num2} more radish{num2s}',
+          finalPrompt: 'How many radishes are there now?',
+          listenAgain: 'Listen'
+        }
+      };
+
+      // Speak function
+      function speak(text) {
+        if ('speechSynthesis' in window) {
+          speechSynthesis.cancel(); // Cancel any ongoing speech
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = currentLanguage === 'zh' ? 'zh-HK' : 'en-US';
+          utterance.volume = 1;
+          utterance.rate = 1;
+          utterance.pitch = 1;
+          speechSynthesis.speak(utterance);
+          console.log('Speaking:', text, 'Lang:', utterance.lang);
+        } else {
+          console.log('Speech synthesis not supported in this browser.');
+        }
+      }
+
+      // Update language texts
+      function updateLanguage() {
+        console.log('Updating language to:', currentLanguage);
+        document.getElementById('operator').textContent = langDict[currentLanguage].operator;
+        document.getElementById('confirm-button').textContent = langDict[currentLanguage].confirm;
+        document.getElementById('complete-message').textContent = langDict[currentLanguage].complete;
+        document.getElementById('next-level-button').textContent = langDict[currentLanguage].nextLevel;
+        document.getElementById('home-button').textContent = langDict[currentLanguage].home;
+        document.getElementById('level-display').childNodes[0].textContent = `${langDict[currentLanguage].level}: `;
+        document.getElementById('lang-toggle').textContent = currentLanguage === 'zh' ? '中/Eng' : 'Eng/中';
+        document.getElementById('reset-button').textContent = langDict[currentLanguage].reset;
+        document.getElementById('listen-again').textContent = langDict[currentLanguage].listenAgain;
+        const feedback = document.getElementById('feedback');
+        if (feedback.style.display !== 'none') {
+          feedback.textContent = feedback.textContent === langDict['zh'].correct || feedback.textContent === langDict['en'].correct
+            ? langDict[currentLanguage].correct
+            : feedback.textContent === langDict['zh'].incorrect || feedback.textContent === langDict['en'].incorrect
+            ? langDict[currentLanguage].incorrect
+            : feedback.textContent === langDict['zh'].noRadish || feedback.textContent === langDict['en'].noRadish
+            ? langDict[currentLanguage].noRadish
+            : langDict[currentLanguage].noNumber;
+        }
+      }
+
+      // Toggle language
+      document.getElementById('lang-toggle').addEventListener('click', () => {
+        currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+        console.log('Language toggled to:', currentLanguage);
+        updateLanguage();
+        saveGameState();
+      });
+
+      // Reset game
+      document.getElementById('reset-button').addEventListener('click', () => {
+        const confirmReset = confirm(langDict[currentLanguage].resetConfirm);
+        if (confirmReset) {
+          localStorage.removeItem('gameState');
+          currentLevel = 1;
+          totalQuestions = 0;
+          correctQuestions = 0;
+          generateQuestion();
+          saveGameState();
+        }
+      });
 
       // Update level display color
       function updateLevelDisplay() {
         const levelDisplay = document.getElementById('level-display');
         levelDisplay.className = `level-display level-${currentLevel}`;
         document.getElementById('level-counter').textContent = currentLevel;
+        updateLanguage();
       }
 
       // Generate new math question
       function generateQuestion() {
         do {
-          num1 = Math.floor(Math.random() * 9) + 1; // 1-9
-          num2 = Math.floor(Math.random() * 9) + 1; // 1-9
+          num1 = Math.floor(Math.random() * 9) + 1;
+          num2 = Math.floor(Math.random() * 9) + 1;
           correctAnswer = num1 + num2;
-        } while (correctAnswer > 9); // Ensure answer <= 9
+        } while (correctAnswer > 9);
 
         document.getElementById('num1').textContent = num1;
         document.getElementById('num2').textContent = num2;
@@ -156,14 +309,12 @@
         radishCount = 0;
         selectedNumber = null;
 
-        // Reset radishes
         const radishes = document.querySelectorAll('.radish');
         radishes.forEach(radish => {
           radish.style.display = 'block';
           radish.setAttribute('draggable', 'true');
         });
 
-        // Reset number grid
         const numberCells = document.querySelectorAll('.number-cell');
         numberCells.forEach(cell => {
           cell.setAttribute('draggable', 'true');
@@ -171,23 +322,78 @@
 
         document.getElementById('feedback').style.display = 'none';
         document.getElementById('game-complete').style.display = 'none';
+        document.getElementById('guide-line').style.display = 'none';
         updateLevelDisplay();
+        saveGameState();
+
+        // Speak initial question prompt
+        const num1Text = numberToText(num1, currentLanguage);
+        const num2Text = numberToText(num2, currentLanguage);
+        const promptText = langDict[currentLanguage].questionPrompt
+          .replace('{num1}', num1Text)
+          .replace('{num2}', num2Text)
+          .replace('{num1s}', currentLanguage === 'en' && num1 > 1 ? 'es' : '');
+        speak(promptText);
       }
+
+      // Listen again button
+      document.getElementById('listen-again').addEventListener('click', () => {
+        const num1Text = numberToText(num1, currentLanguage);
+        const num2Text = numberToText(num2, currentLanguage);
+        const promptText = langDict[currentLanguage].questionPrompt
+          .replace('{num1}', num1Text)
+          .replace('{num2}', num2Text)
+          .replace('{num1s}', currentLanguage === 'en' && num1 > 1 ? 'es' : '');
+        speak(promptText);
+      });
 
       // Initialize drag and drop for radishes
       const radishes = document.querySelectorAll('.radish');
       const bucket = document.getElementById('bucket');
       const radishArea = document.querySelector('.radish-area');
+      const guideLine = document.getElementById('guide-line');
 
       radishes.forEach(radish => {
-        radish.addEventListener('dragstart', () => {
+        radish.addEventListener('dragstart', (e) => {
           radish.classList.add('dragging');
+          console.log('Dragging radish:', radish.getAttribute('data-index'));
+          updateGuideLine(e);
+          guideLine.style.display = 'block';
+          requestAnimationFrame(() => updateGuideLine(e));
+        });
+
+        radish.addEventListener('drag', (e) => {
+          updateGuideLine(e);
         });
 
         radish.addEventListener('dragend', () => {
           radish.classList.remove('dragging');
+          guideLine.style.display = 'none';
         });
       });
+
+      function updateGuideLine(e) {
+        const radish = document.querySelector('.radish.dragging');
+        if (!radish) return;
+        const bucketRect = bucket.getBoundingClientRect();
+        const radishRect = radish.getBoundingClientRect();
+        const gameArea = document.querySelector('.game-area');
+        const gameAreaRect = gameArea.getBoundingClientRect();
+
+        const startX = radishRect.left + radishRect.width / 2 - gameAreaRect.left;
+        const startY = radishRect.top + radishRect.height / 2 - gameAreaRect.top;
+        const endX = bucketRect.left + bucketRect.width / 2 - gameAreaRect.left;
+        const endY = bucketRect.top + bucketRect.height / 2 - gameAreaRect.top;
+
+        const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+        const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+
+        guideLine.style.width = `${length}px`;
+        guideLine.style.left = `${startX}px`;
+        guideLine.style.top = `${startY}px`;
+        guideLine.style.transform = `rotate(${angle}deg)`;
+        guideLine.style.transformOrigin = '0 0';
+      }
 
       bucket.addEventListener('dragover', e => {
         e.preventDefault();
@@ -202,7 +408,6 @@
           draggedRadish.setAttribute('draggable', 'false');
           radishCount++;
 
-          // Add radish to bucket
           const bucketRadish = document.createElement('img');
           bucketRadish.src = 'assets/images/radishes.png';
           bucketRadish.className = 'bucket-radish';
@@ -210,18 +415,38 @@
           bucketRadish.setAttribute('draggable', 'true');
           document.getElementById('bucket-radishes').appendChild(bucketRadish);
 
-          // Enable drag back
           bucketRadish.addEventListener('dragstart', () => {
             bucketRadish.classList.add('dragging');
+            guideLine.style.display = 'block';
+            requestAnimationFrame(() => updateGuideLine({ clientX: bucketRadish.getBoundingClientRect().left, clientY: bucketRadish.getBoundingClientRect().top }));
+          });
+
+          bucketRadish.addEventListener('drag', (e) => {
+            updateGuideLine(e);
           });
 
           bucketRadish.addEventListener('dragend', () => {
             bucketRadish.classList.remove('dragging');
+            guideLine.style.display = 'none';
           });
+
+          console.log('Radish dropped in bucket, count:', radishCount);
+          guideLine.style.display = 'none';
+
+          // Speak prompts based on radish count
+          if (radishCount === num1) {
+            const num2Text = numberToText(num2, currentLanguage);
+            const secondPrompt = langDict[currentLanguage].secondPrompt
+              .replace('{num2}', num2Text)
+              .replace('{num2s}', currentLanguage === 'en' && num2 > 1 ? 'es' : '');
+            speak(secondPrompt);
+          } else if (radishCount === correctAnswer) {
+            const finalPrompt = langDict[currentLanguage].finalPrompt;
+            speak(finalPrompt);
+          }
         }
       });
 
-      // Drag back to radish area
       radishArea.addEventListener('dragover', e => {
         e.preventDefault();
       });
@@ -236,16 +461,18 @@
           originalRadish.setAttribute('draggable', 'true');
           draggedRadish.remove();
           radishCount--;
+          console.log('Radish returned to area, count:', radishCount);
+          guideLine.style.display = 'none';
         }
       });
 
-      // Initialize drag and drop for numbers
       const numberCells = document.querySelectorAll('.number-cell');
       const answerBox = document.getElementById('answer-box');
 
       numberCells.forEach(cell => {
         cell.addEventListener('dragstart', () => {
           cell.classList.add('dragging');
+          console.log('Dragging number:', cell.getAttribute('data-number'));
         });
 
         cell.addEventListener('dragend', () => {
@@ -263,60 +490,66 @@
         if (draggedCell) {
           selectedNumber = parseInt(draggedCell.getAttribute('data-number'));
           answerBox.textContent = selectedNumber;
+          console.log('Dropped number:', selectedNumber);
         }
       });
 
-      // Confirm button click
       document.getElementById('confirm-button').addEventListener('click', () => {
-        if (selectedNumber !== null) {
-          checkAnswer(selectedNumber);
-        } else {
-          const feedback = document.getElementById('feedback');
-          feedback.textContent = '請選擇一個數字！';
+        console.log('Confirm button clicked, selectedNumber:', selectedNumber, 'radishCount:', radishCount);
+        const feedback = document.getElementById('feedback');
+        if (radishCount === 0) {
+          feedback.textContent = langDict[currentLanguage].noRadish;
           feedback.className = 'feedback incorrect';
           feedback.style.display = 'block';
           setTimeout(() => {
             feedback.style.display = 'none';
           }, 2000);
-        }
-      });
-
-      // Check if the answer is correct
-      function checkAnswer(number) {
-        const feedback = document.getElementById('feedback');
-        const audio = new Audio();
-
-        if (number === correctAnswer && radishCount === correctAnswer) {
-          feedback.textContent = '答對了！';
-          feedback.className = 'feedback correct';
-          audio.src = 'assets/audio/suc.mp3';
-          audio.play();
-
-          // Check if game is complete
-          if (currentLevel < maxLevels) {
-            currentLevel++;
-            setTimeout(generateQuestion, 2000); // Next level
-          } else {
-            setTimeout(() => {
-              document.getElementById('game-complete').style.display = 'block';
-              document.querySelector('.game-area').style.pointerEvents = 'none'; // Disable interactions
-            }, 2000);
-          }
-        } else {
-          feedback.textContent = '答錯了！';
+        } else if (selectedNumber === null) {
+          feedback.textContent = langDict[currentLanguage].noNumber;
           feedback.className = 'feedback incorrect';
-          audio.src = 'assets/audio/err.mp3';
-          audio.play();
+          feedback.style.display = 'block';
           setTimeout(() => {
             feedback.style.display = 'none';
           }, 2000);
+        } else {
+          checkAnswer(selectedNumber);
         }
+      });
+
+      function checkAnswer(number) {
+        const feedback = document.getElementById('feedback');
+        const audio = new Audio();
+        totalQuestions++;
+
+        if (number === correctAnswer && radishCount === correctAnswer) {
+          correctQuestions++;
+          feedback.textContent = langDict[currentLanguage].correct;
+          feedback.className = 'feedback correct';
+          audio.src = 'assets/audio/suc.mp3';
+          audio.play();
+        } else {
+          feedback.textContent = langDict[currentLanguage].incorrect;
+          feedback.className = 'feedback incorrect';
+          audio.src = 'assets/audio/err.mp3';
+          audio.play();
+        }
+
+        // Always proceed to next level or complete game
+        if (currentLevel < maxLevels) {
+          currentLevel++;
+          setTimeout(generateQuestion, 1000);
+        } else {
+          setTimeout(() => {
+            document.getElementById('game-complete').style.display = 'block';
+            document.querySelector('.game-area').style.pointerEvents = 'none';
+          }, 2000);
+        }
+        saveGameState();
       }
 
-      // Smooth scrolling for games link
       const gamesLink = document.querySelector('a[href="#games"]');
       if (gamesLink) {
-        gamesLink.addEventListener('click', function (event) {
+        gamesLink.addEventListener('click', function(event) {
           event.preventDefault();
           const targetSection = document.querySelector('.game-container');
           if (targetSection) {
@@ -328,7 +561,10 @@
         });
       }
 
-      // Start the game
+      // Initialize game
+      loadGameState();
+      updateLanguage(); // Ensure language is updated before speaking
+      speak(langDict[currentLanguage].welcomePrompt); // Speak welcome message
       generateQuestion();
     });
   </script>

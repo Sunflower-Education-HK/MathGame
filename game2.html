@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Kindergarten Counting Adventure</title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
+  <link rel="stylesheet" href="assets/css/game1.css">
+</head>
+<body>
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="assets/images/logo.png" alt="Counting Adventure Logo">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="#games">Games</a></li>
+              <li><a href="record.html">Record<img src="assets/images/profile.png" alt="Kid Profile"></a></li>
+            </ul>
+            <a class="menu-trigger">
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+          <!-- ***** Game Area Start ***** -->
+          <div class="game-container">
+            <div class="level-controls">
+              <button id="lang-toggle">中/Eng</button>
+              <div class="level-display" id="level-display">Level: <span id="level-counter">1</span>/40</div>
+            </div>
+            <div class="game-area">
+              <!-- Math Question -->
+              <div class="math-question">
+                <span id="num1"></span> <span id="operator">+</span> <span id="num2"></span> = 
+                <div id="answer-box" class="answer-box dashed-box"></div>
+                <button id="confirm-button">確認</button>
+              </div>
+              <!-- Number Grid -->
+              </div>
+              <!-- Bucket -->
+              <div class="bucket-area">
+                <div id="bucket-radishes"></div>
+                <img id="bucket" src="assets/images/bucket.png" alt="Bucket">
+              </div>
+              <!-- Guide Line -->
+              <div id="guide-line" class="guide-line"></div>
+              <!-- Feedback -->
+              <div id="feedback" class="feedback"></div>
+            </div>
+            <!-- Game Complete -->
+            <div id="game-complete" class="game-complete">
+              <h2 id="complete-message">恭喜完成遊戲！</h2>
+              <button id="next-level-button" onclick="window.location.href='record.html'">去下一關</button>
+              <button id="home-button" onclick="window.location.href='index.html'">回到主頁</button>
+            </div>
+          </div>
+          <!-- ***** Game Area End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/popup.js"></script>
+  <script src="assets/js/custom.js"></script>
+
+  <!-- Game Logic JavaScript -->
+
+</body>
+</html>
