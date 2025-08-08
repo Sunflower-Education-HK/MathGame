@@ -96,7 +96,7 @@
 /* Guide Line */
 .guide-line {
   position: absolute;
-  border: 2px dashed #4CAF50;
+  border: 2px dashed #df0a03;
   height: 2px;
   background: transparent;
   display: none;
@@ -155,8 +155,8 @@
   margin-left: -90px;
   padding: 10px;
   font-size: 24px;
-  background-color: #fb722d;
-  color: white;
+  background-color: #ff863b;
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 100px;
   cursor: pointer;

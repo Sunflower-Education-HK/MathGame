@@ -66,7 +66,7 @@
             <div class="game-area">
               <!-- Math Question -->
               <div class="math-question">
-                <button id="listen-again">聽多次</button>
+                <button id="listen-again">🔊聽一次</button>
                 <span id="num1"></span> <span id="operator">+</span> <span id="num2"></span> = 
                 <div id="answer-box" class="answer-box dashed-box"></div>
                 <button id="confirm-button">確認</button>
@@ -221,7 +221,7 @@
           questionPrompt: 'The question is {num1} plus {num2}, we need to put {num1} radish{num1s} in the bucket first',
           secondPrompt: 'Now we need {num2} more radish{num2s}',
           finalPrompt: 'How many radishes are there now?',
-          listenAgain: 'Listen'
+          listenAgain: 'Listen Again'
         }
       };
 
@@ -330,9 +330,10 @@
         const num1Text = numberToText(num1, currentLanguage);
         const num2Text = numberToText(num2, currentLanguage);
         const promptText = langDict[currentLanguage].questionPrompt
-          .replace('{num1}', num1Text)
-          .replace('{num2}', num2Text)
+          .replace(/\{num1\}/g, num1Text)
+          .replace(/\{num2\}/g, num2Text)
           .replace('{num1s}', currentLanguage === 'en' && num1 > 1 ? 'es' : '');
+        console.log('Question prompt:', promptText);
         speak(promptText);
       }
 
@@ -341,9 +342,10 @@
         const num1Text = numberToText(num1, currentLanguage);
         const num2Text = numberToText(num2, currentLanguage);
         const promptText = langDict[currentLanguage].questionPrompt
-          .replace('{num1}', num1Text)
-          .replace('{num2}', num2Text)
+          .replace(/\{num1\}/g, num1Text)
+          .replace(/\{num2\}/g, num2Text)
           .replace('{num1s}', currentLanguage === 'en' && num1 > 1 ? 'es' : '');
+        console.log('Listen again prompt:', promptText);
         speak(promptText);
       });
 
@@ -437,11 +439,13 @@
           if (radishCount === num1) {
             const num2Text = numberToText(num2, currentLanguage);
             const secondPrompt = langDict[currentLanguage].secondPrompt
-              .replace('{num2}', num2Text)
+              .replace(/\{num2\}/g, num2Text)
               .replace('{num2s}', currentLanguage === 'en' && num2 > 1 ? 'es' : '');
+            console.log('Second prompt:', secondPrompt);
             speak(secondPrompt);
           } else if (radishCount === correctAnswer) {
             const finalPrompt = langDict[currentLanguage].finalPrompt;
+            console.log('Final prompt:', finalPrompt);
             speak(finalPrompt);
           }
         }
