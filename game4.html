@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Kindergarten Addition and Subtraction Adventure</title>
+    <title>Kindergarten Shopping Adventure</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
     <link rel="stylesheet" href="assets/css/game4.css">
 </head>
-
 <body>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
@@ -41,8 +39,7 @@
                         <ul class="nav">
                             <li><a href="index.html" class="active">Home</a></li>
                             <li><a href="#games">Games</a></li>
-                            <li><a href="record.html">Record<img src="assets/images/profile.png" alt="Kid Profile"></a>
-                            </li>
+                            <li><a href="record.html">Record<img src="assets/images/profile.png" alt="Kid Profile"></a></li>
                         </ul>
                         <a class="menu-trigger">
                             <span>Menu</span>
@@ -63,21 +60,23 @@
                     <div class="game-container">
                         <div class="level-controls">
                             <button id="lang-toggle">中/Eng</button>
-                            <div class="level-display" id="level-display">Level: <span id="level-counter">1</span>/40
-                            </div>
+                            <div class="level-display" id="level-display">Level: <span id="level-counter">1</span>/40</div>
                             <button id="reset-button">重置</button>
                         </div>
                         <div class="game-area">
                             <!-- Math Question -->
                             <div class="math-question">
                                 <button id="listen-again">🔊聽一次</button>
-                                <span id="num1"></span> + <span id="num2"></span> <span id="operator">-</span> <span
-                                    id="num3"></span> =
-                                <div id="answer-box" class="answer-box dashed-box"></div>
+                                <span id="num1"></span><span id="item1"></span> + 
+                                <span id="num2"></span><span id="item2"></span> + 
+                                <span id="num3"></span><span id="item3"></span> =
+                                <div id="answer-box" class="answer-box"></div>
                                 <button id="confirm-button">確認</button>
+                                <button id="resetanw">更正</button>
                             </div>
                             <!-- Number Grid -->
                             <div class="number-grid">
+                                <div class="number-cell" data-number="0">0</div>
                                 <div class="number-cell" data-number="1">1</div>
                                 <div class="number-cell" data-number="2">2</div>
                                 <div class="number-cell" data-number="3">3</div>
@@ -90,65 +89,62 @@
                             </div>
                             <!-- Nut Area -->
                             <div class="nut-area">
-                                <div class="nut-row top-row">
-                                    <img class="nut" data-index="0" src="assets/images/food1.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="1" src="assets/images/food1.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="2" src="assets/images/food1.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="3" src="assets/images/food1.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="4" src="assets/images/food1.png" alt="Soda"
-                                        draggable="true">
+                                <div class="nut-row">
+                                    <img class="nut" data-index="0" data-type="chips" data-value="20" src="assets/images/food1.png" alt="Chips" draggable="true">
+                                    <img class="nut" data-index="1" data-type="chips" data-value="20" src="assets/images/food1.png" alt="Chips" draggable="true">
+                                    <img class="nut" data-index="2" data-type="chips" data-value="20" src="assets/images/food1.png" alt="Chips" draggable="true">
+                                    <img class="nut" data-index="3" data-type="chips" data-value="20" src="assets/images/food1.png" alt="Chips" draggable="true">
+                                    <img class="nut" data-index="4" data-type="chips" data-value="20" src="assets/images/food1.png" alt="Chips" draggable="true">
                                 </div>
-                                <div class="nut-row top-row">
-                                    <img class="nut" data-index="5" src="assets/images/cola.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="6" src="assets/images/cola.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="7" src="assets/images/cola.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="8" src="assets/images/cola.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="9" src="assets/images/cola.png" alt="Soda"
-                                        draggable="true">
+                                <div class="nut-row">
+                                    <img class="nut" data-index="5" data-type="cola" data-value="10" src="assets/images/cola.png" alt="Cola" draggable="true">
+                                    <img class="nut" data-index="6" data-type="cola" data-value="10" src="assets/images/cola.png" alt="Cola" draggable="true">
+                                    <img class="nut" data-index="7" data-type="cola" data-value="10" src="assets/images/cola.png" alt="Cola" draggable="true">
+                                    <img class="nut" data-index="8" data-type="cola" data-value="10" src="assets/images/cola.png" alt="Cola" draggable="true">
+                                    <img class="nut" data-index="9" data-type="cola" data-value="10" src="assets/images/cola.png" alt="Cola" draggable="true">
                                 </div>
-                                <div class="nut-row bottom-row">
-                                    <img class="nut" data-index="10" src="assets/images/food4.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="11" src="assets/images/food4.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="12" src="assets/images/food4.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="13" src="assets/images/food4.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="14" src="assets/images/food4.png" alt="Soda"
-                                        draggable="true">
+                                <div class="nut-row">
+                                    <img class="nut" data-index="10" data-type="candy" data-value="1" src="assets/images/food3.png" alt="Candy" draggable="true">
+                                    <img class="nut" data-index="11" data-type="candy" data-value="1" src="assets/images/food3.png" alt="Candy" draggable="true">
+                                    <img class="nut" data-index="12" data-type="candy" data-value="1" src="assets/images/food3.png" alt="Candy" draggable="true">
+                                    <img class="nut" data-index="13" data-type="candy" data-value="1" src="assets/images/food3.png" alt="Candy" draggable="true">
+                                    <img class="nut" data-index="14" data-type="candy" data-value="1" src="assets/images/food3.png" alt="Candy" draggable="true">
                                 </div>
-                                <div class="nut-row bottom-row">
-                                    <img class="nut" data-index="10" src="assets/images/food3.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="11" src="assets/images/food3.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="12" src="assets/images/food3.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="13" src="assets/images/food3.png" alt="Soda"
-                                        draggable="true">
-                                    <img class="nut" data-index="14" src="assets/images/food3.png" alt="Soda"
-                                        draggable="true">
+                                <div class="nut-row">
+                                    <img class="nut" data-index="15" data-type="milk" data-value="5" src="assets/images/food4.png" alt="Milk" draggable="true">
+                                    <img class="nut" data-index="16" data-type="milk" data-value="5" src="assets/images/food4.png" alt="Milk" draggable="true">
+                                    <img class="nut" data-index="17" data-type="milk" data-value="5" src="assets/images/food4.png" alt="Milk" draggable="true">
+                                    <img class="nut" data-index="18" data-type="milk" data-value="5" src="assets/images/food4.png" alt="Milk" draggable="true">
+                                    <img class="nut" data-index="19" data-type="milk" data-value="5" src="assets/images/food4.png" alt="Milk" draggable="true">
                                 </div>
                             </div>
-
                             <!-- Box Area -->
                             <div class="box-area">
+                                <div class="money-area">
+                                    <img class="money" data-value="10" src="assets/images/money10.png" alt="Money $10" draggable="true">
+                                    <img class="money" data-value="20" src="assets/images/money20.png" alt="Money $20" draggable="true">
+                                    <img class="money" data-value="50" src="assets/images/money50.png" alt="Money $50" draggable="true">
+                                    <img class="money" data-value="100" src="assets/images/money100.png" alt="Money $100" draggable="true">
+                                </div>
                                 <div id="box-nuts"></div>
-                                <img id="box" src="assets/images/buy.png" alt="Box">
+                                <img id="box" src="assets/images/buy.png" alt="Shopping Basket">
+                            </div>
+                            <!-- Cash Register Display -->
+                            <div class="cash-register">
+                                <div id="cash-display"></div>
+                                <div class="change-area" style="display: none;">
+                                    <img class="change-money" data-value="1" src="assets/images/money1.png" alt="Change $1" draggable="true">
+                                    <img class="change-money" data-value="5" src="assets/images/money5.png" alt="Change $5" draggable="true">
+                                    <img class="change-money" data-value="10" src="assets/images/money10.png" alt="Change $10" draggable="true">
+                                    <img class="change-money" data-value="20" src="assets/images/money20.png" alt="Change $20" draggable="true">
+                                    <img class="change-money" data-value="50" src="assets/images/money50.png" alt="Change $50" draggable="true">
+                                </div>
                             </div>
                             <!-- Hamster Area -->
                             <div class="hamster-area">
+                                <div id="cash-calculator"></div>
                                 <div id="hamster-nuts"></div>
-                                <img id="hamster" src="assets/images/cashier.png" alt="Kid">
+                                <img id="hamster" src="assets/images/cashier.png" alt="Cashier">
                             </div>
                             <!-- Guide Line -->
                             <div id="guide-line" class="guide-line"></div>
@@ -158,7 +154,6 @@
                         <!-- Game Complete -->
                         <div id="game-complete" class="game-complete">
                             <h2 id="complete-message">恭喜完成遊戲！</h2>
-                            <button id="next-level-button" onclick="window.location.href='record.html'">去下一關</button>
                             <button id="home-button" onclick="window.location.href='index.html'">回到主頁</button>
                         </div>
                     </div>
@@ -176,579 +171,6 @@
     <script src="assets/js/tabs.js"></script>
     <script src="assets/js/popup.js"></script>
     <script src="assets/js/custom.js"></script>
-
-    <!-- Game Logic JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let num1, num2, num3, correctAnswer;
-            let boxNutCount = 0;
-            let hamsterNutCount = 0;
-            let selectedNumber = null;
-            let currentLevel = 1;
-            const maxLevels = 40;
-            const maxNuts = 10;
-            let currentLanguage = 'zh';
-            let totalQuestions = 0;
-            let correctQuestions = 0;
-
-            // Load saved game state
-            function loadGameState() {
-                const savedState = localStorage.getItem('gameState');
-                if (savedState) {
-                    const state = JSON.parse(savedState);
-                    currentLevel = state.currentLevel || 1;
-                    totalQuestions = state.totalQuestions || 0;
-                    correctQuestions = state.correctQuestions || 0;
-                    currentLanguage = state.currentLanguage || 'zh';
-                }
-            }
-
-            // Save game state
-            function saveGameState() {
-                const state = {
-                    currentLevel,
-                    totalQuestions,
-                    correctQuestions,
-                    currentLanguage
-                };
-                localStorage.setItem('gameState', JSON.stringify(state));
-            }
-
-            // Convert number to text for speech
-            function numberToText(number, language) {
-                const numberDict = {
-                    zh: {
-                        0: '零', 1: '一', 2: '二', 3: '三', 4: '四', 5: '五',
-                        6: '六', 7: '七', 8: '八', 9: '九'
-                    },
-                    en: {
-                        0: 'zero', 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five',
-                        6: 'six', 7: 'seven', 8: 'eight', 9: 'nine'
-                    }
-                };
-                return numberDict[language][number] || number.toString();
-            }
-
-            // Language dictionary
-            const langDict = {
-                zh: {
-                    operator: '-',
-                    confirm: '確認',
-                    noNut: '請將汽水拖到箱子！',
-                    noNumber: '請選擇一個數字！',
-                    correct: '答對了！',
-                    incorrect: '答錯了！',
-                    complete: '恭喜完成遊戲！',
-                    nextLevel: '去下一關',
-                    home: '回到主頁',
-                    level: '關卡',
-                    reset: '重置',
-                    resetConfirm: '確定要重置遊戲記錄嗎？',
-                    welcomePrompt: '歡迎嚟到加減數冒險遊戲！請拖曳汽水同數字去答題！',
-                    questionPrompt: '題目係{num1}加{num2}減{num3}，幫媽媽攞{num1}罐汽水,放落購物籃',
-                    secondPrompt: '小朋友想要多{num2}罐汽水',
-                    thirdPrompt: '媽媽話攞太多了汽水,不如請隔離小朋友飲{num3}罐汽水啦',
-                    finalPrompt: '而家重有幾罐汽水喺個購物籃？',
-                    listenAgain: '🔊聽一次'
-                },
-                en: {
-                    operator: '-',
-                    confirm: 'Confirm',
-                    noNut: 'Drag sodas to the box!',
-                    noNumber: 'Please select a number!',
-                    correct: 'Correct!',
-                    incorrect: 'Incorrect!',
-                    complete: 'Congratulations, game completed!',
-                    nextLevel: 'Next Level',
-                    home: 'Back to Home',
-                    level: 'Level',
-                    reset: 'Reset',
-                    resetConfirm: 'Are you sure you want to reset game progress?',
-                    welcomePrompt: 'Welcome to the Addition and Subtraction Adventure Game! Please drag sodas and numbers to answer!',
-                    questionPrompt: 'The question is {num1} plus {num2} minus {num3}, help mom get {num1} cans of soda drop to shopping cart',
-                    secondPrompt: 'You want {num2} more cans of soda',
-                    thirdPrompt: 'Mom said she took too much soda, give {num3} cans of soda to the quarantined children',
-                    finalPrompt: 'How many cans are left in the shopping basket?',
-                    listenAgain: '🔊Listen'
-                }
-            };
-
-            // Speak function
-            function speak(text) {
-                if ('speechSynthesis' in window) {
-                    speechSynthesis.cancel(); // Cancel any ongoing speech
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = currentLanguage === 'zh' ? 'zh-HK' : 'en-US';
-                    utterance.volume = 1;
-                    utterance.rate = 1;
-                    utterance.pitch = 1;
-                    speechSynthesis.speak(utterance);
-                    console.log('Speaking:', text, 'Lang:', utterance.lang);
-                } else {
-                    console.log('Speech synthesis not supported in this browser.');
-                }
-            }
-
-            // Update language texts
-            function updateLanguage() {
-                console.log('Updating language to:', currentLanguage);
-                document.getElementById('operator').textContent = langDict[currentLanguage].operator;
-                document.getElementById('confirm-button').textContent = langDict[currentLanguage].confirm;
-                document.getElementById('complete-message').textContent = langDict[currentLanguage].complete;
-                document.getElementById('next-level-button').textContent = langDict[currentLanguage].nextLevel;
-                document.getElementById('home-button').textContent = langDict[currentLanguage].home;
-                document.getElementById('level-display').childNodes[0].textContent = `${langDict[currentLanguage].level}: `;
-                document.getElementById('lang-toggle').textContent = currentLanguage === 'zh' ? '中/Eng' : 'Eng/中';
-                document.getElementById('reset-button').textContent = langDict[currentLanguage].reset;
-                document.getElementById('listen-again').textContent = langDict[currentLanguage].listenAgain;
-                const feedback = document.getElementById('feedback');
-                if (feedback.style.display !== 'none') {
-                    feedback.textContent = feedback.textContent === langDict['zh'].correct || feedback.textContent === langDict['en'].correct
-                        ? langDict[currentLanguage].correct
-                        : feedback.textContent === langDict['zh'].incorrect || feedback.textContent === langDict['en'].incorrect
-                            ? langDict[currentLanguage].incorrect
-                            : langDict[currentLanguage].noNut;
-                }
-            }
-
-            // Toggle language
-            document.getElementById('lang-toggle').addEventListener('click', () => {
-                currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
-                console.log('Language toggled to:', currentLanguage);
-                updateLanguage();
-                saveGameState();
-            });
-
-            // Reset game
-            document.getElementById('reset-button').addEventListener('click', () => {
-                const confirmReset = confirm(langDict[currentLanguage].resetConfirm);
-                if (confirmReset) {
-                    localStorage.removeItem('gameState');
-                    currentLevel = 1;
-                    totalQuestions = 0;
-                    correctQuestions = 0;
-                    generateQuestion();
-                    saveGameState();
-                }
-            });
-
-            // Update level display color
-            function updateLevelDisplay() {
-                const levelDisplay = document.getElementById('level-display');
-                levelDisplay.className = `level-display level-${currentLevel}`;
-                document.getElementById('level-counter').textContent = currentLevel;
-                updateLanguage();
-            }
-
-            // Generate new math question
-            function generateQuestion() {
-                do {
-                    num1 = Math.floor(Math.random() * 9) + 1; // num1 from 1 to 9
-                    num2 = Math.floor(Math.random() * 9) + 1; // num2 from 1 to 9
-                    num3 = Math.floor(Math.random() * (num1 + num2 - 1)) + 1; // num3 from 1 to num1 + num2 - 1
-                    correctAnswer = num1 + num2 - num3;
-                    console.log('Generated: num1=', num1, 'num2=', num2, 'num3=', num3, 'correctAnswer=', correctAnswer);
-                } while (correctAnswer < 1 || num1 + num2 > maxNuts || num3 > num1 + num2);
-
-                document.getElementById('num1').textContent = num1;
-                document.getElementById('num2').textContent = num2;
-                document.getElementById('num3').textContent = num3;
-                document.getElementById('answer-box').textContent = '';
-                document.getElementById('box-nuts').innerHTML = '';
-                document.getElementById('hamster-nuts').innerHTML = '';
-                boxNutCount = 0;
-                hamsterNutCount = 0;
-                selectedNumber = null;
-
-                const nuts = document.querySelectorAll('.nut');
-                nuts.forEach(nut => {
-                    nut.style.display = 'block';
-                    nut.setAttribute('draggable', 'true');
-                });
-
-                const numberCells = document.querySelectorAll('.number-cell');
-                numberCells.forEach(cell => {
-                    cell.setAttribute('draggable', 'true');
-                });
-
-                document.getElementById('feedback').style.display = 'none';
-                document.getElementById('game-complete').style.display = 'none';
-                document.getElementById('guide-line').style.display = 'none';
-                updateLevelDisplay();
-                saveGameState();
-
-                // Speak initial question prompt
-                const num1Text = numberToText(num1, currentLanguage);
-                const num2Text = numberToText(num2, currentLanguage);
-                const num3Text = numberToText(num3, currentLanguage);
-                const promptText = langDict[currentLanguage].questionPrompt
-                    .replace(/\{num1\}/g, num1Text)
-                    .replace(/\{num2\}/g, num2Text)
-                    .replace(/\{num3\}/g, num3Text)
-                    .replace('{num1s}', currentLanguage === 'en' && num1 > 1 ? 's' : '')
-                    .replace('{num2s}', currentLanguage === 'en' && num2 > 1 ? 's' : '')
-                    .replace('{num3s}', currentLanguage === 'en' && num3 > 1 ? 's' : '');
-                console.log('Question prompt:', promptText);
-                speak(promptText);
-            }
-
-            // Listen again button
-            document.getElementById('listen-again').addEventListener('click', () => {
-                const num1Text = numberToText(num1, currentLanguage);
-                const num2Text = numberToText(num2, currentLanguage);
-                const num3Text = numberToText(num3, currentLanguage);
-                const promptText = langDict[currentLanguage].questionPrompt
-                    .replace(/\{num1\}/g, num1Text)
-                    .replace(/\{num2\}/g, num2Text)
-                    .replace(/\{num3\}/g, num3Text)
-                    .replace('{num1s}', currentLanguage === 'en' && num1 > 1 ? 's' : '')
-                    .replace('{num2s}', currentLanguage === 'en' && num2 > 1 ? 's' : '')
-                    .replace('{num3s}', currentLanguage === 'en' && num3 > 1 ? 's' : '');
-                console.log('Listen again prompt:', promptText);
-                speak(promptText);
-            });
-
-            // Initialize drag and drop for nuts
-            const nuts = document.querySelectorAll('.nut');
-            const box = document.getElementById('box');
-            const hamster = document.getElementById('hamster');
-            const nutArea = document.querySelector('.nut-area');
-            const boxArea = document.querySelector('.box-area');
-            const guideLine = document.getElementById('guide-line');
-
-            nuts.forEach(nut => {
-                nut.addEventListener('dragstart', (e) => {
-                    nut.classList.add('dragging');
-                    console.log('Dragging soda:', nut.getAttribute('data-index'));
-                    updateGuideLine(e, box);
-                    guideLine.style.display = 'block';
-                    requestAnimationFrame(() => updateGuideLine(e, box));
-                });
-
-                nut.addEventListener('drag', (e) => {
-                    updateGuideLine(e, box);
-                });
-
-                nut.addEventListener('dragend', () => {
-                    nut.classList.remove('dragging');
-                    guideLine.style.display = 'none';
-                });
-            });
-
-            function updateGuideLine(e, target) {
-                const nut = document.querySelector('.nut.dragging') || document.querySelector('.box-nut.dragging');
-                if (!nut) return;
-                const targetRect = target.getBoundingClientRect();
-                const nutRect = nut.getBoundingClientRect();
-                const gameArea = document.querySelector('.game-area');
-                const gameAreaRect = gameArea.getBoundingClientRect();
-
-                const startX = nutRect.left + nutRect.width / 2 - gameAreaRect.left;
-                const startY = nutRect.top + nutRect.height / 2 - gameAreaRect.top;
-                const endX = targetRect.left + targetRect.width / 2 - gameAreaRect.left;
-                const endY = targetRect.top - 20 - gameAreaRect.top; // Above target's head
-
-                const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
-                const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-
-                guideLine.style.width = `${length}px`;
-                guideLine.style.left = `${startX}px`;
-                guideLine.style.top = `${startY}px`;
-                guideLine.style.transform = `rotate(${angle}deg)`;
-                guideLine.style.transformOrigin = '0 0';
-            }
-
-            // Drag to box
-            box.addEventListener('dragover', e => {
-                e.preventDefault();
-            });
-
-            box.addEventListener('drop', e => {
-                e.preventDefault();
-                const draggedNut = document.querySelector('.nut.dragging');
-                if (draggedNut && boxNutCount < maxNuts) {
-                    const index = draggedNut.getAttribute('data-index');
-                    draggedNut.style.display = 'none';
-                    draggedNut.setAttribute('draggable', 'false');
-                    boxNutCount++;
-
-                    const boxNut = document.createElement('img');
-                    boxNut.src = 'assets/images/cola.png';
-                    boxNut.className = 'box-nut';
-                    boxNut.setAttribute('data-index', index);
-                    boxNut.setAttribute('draggable', 'true');
-                    document.getElementById('box-nuts').appendChild(boxNut);
-
-                    boxNut.addEventListener('dragstart', () => {
-                        boxNut.classList.add('dragging');
-                        guideLine.style.display = 'block';
-                        requestAnimationFrame(() => updateGuideLine({ clientX: boxNut.getBoundingClientRect().left, clientY: boxNut.getBoundingClientRect().top }, hamster));
-                    });
-
-                    boxNut.addEventListener('drag', (e) => {
-                        updateGuideLine(e, hamster);
-                    });
-
-                    boxNut.addEventListener('dragend', () => {
-                        boxNut.classList.remove('dragging');
-                        guideLine.style.display = 'none';
-                    });
-
-                    console.log('Soda dropped to box, count:', boxNutCount);
-                    guideLine.style.display = 'none';
-
-                    // Speak second prompt when box has num1 sodas
-                    if (boxNutCount === num1) {
-                        const num2Text = numberToText(num2, currentLanguage);
-                        const secondPrompt = langDict[currentLanguage].secondPrompt
-                            .replace(/\{num2\}/g, num2Text)
-                            .replace('{num2s}', currentLanguage === 'en' && num2 > 1 ? 's' : '');
-                        console.log('Second prompt:', secondPrompt);
-                        speak(secondPrompt);
-                    }
-
-                    // Speak third prompt when box has num1 + num2 sodas
-                    if (boxNutCount === num1 + num2) {
-                        const num3Text = numberToText(num3, currentLanguage);
-                        const thirdPrompt = langDict[currentLanguage].thirdPrompt
-                            .replace(/\{num3\}/g, num3Text)
-                            .replace('{num3s}', currentLanguage === 'en' && num3 > 1 ? 's' : '');
-                        console.log('Third prompt:', thirdPrompt);
-                        speak(thirdPrompt);
-                    }
-                }
-            });
-
-            // Drag from box to hamster
-            hamster.addEventListener('dragover', e => {
-                e.preventDefault();
-            });
-
-            hamster.addEventListener('drop', e => {
-                e.preventDefault();
-                const draggedNut = document.querySelector('.box-nut.dragging');
-                if (draggedNut && hamsterNutCount < maxNuts) {
-                    const index = draggedNut.getAttribute('data-index');
-                    draggedNut.remove();
-                    boxNutCount--;
-                    hamsterNutCount++;
-
-                    const hamsterNut = document.createElement('img');
-                    hamsterNut.src = 'assets/images/cola.png';
-                    hamsterNut.className = 'hamster-nut';
-                    hamsterNut.setAttribute('data-index', index);
-                    hamsterNut.setAttribute('draggable', 'true');
-                    document.getElementById('hamster-nuts').appendChild(hamsterNut);
-
-                    // Play eat sound
-                    const audio = new Audio('assets/audio/eat.mp3');
-                    audio.play();
-
-                    // Trigger hamster shake animation
-                    hamster.classList.add('shake');
-                    setTimeout(() => {
-                        hamster.classList.remove('shake');
-                    }, 1000); // Remove animation class after 1s (0.5s × 2)
-
-                    hamsterNut.addEventListener('dragstart', () => {
-                        hamsterNut.classList.add('dragging');
-                        guideLine.style.display = 'block';
-                        requestAnimationFrame(() => updateGuideLine({ clientX: hamsterNut.getBoundingClientRect().left, clientY: hamsterNut.getBoundingClientRect().top }, box));
-                    });
-
-                    hamsterNut.addEventListener('drag', (e) => {
-                        updateGuideLine(e, box);
-                    });
-
-                    hamsterNut.addEventListener('dragend', () => {
-                        hamsterNut.classList.remove('dragging');
-                        guideLine.style.display = 'none';
-                    });
-
-                    console.log('Soda dropped to kid, box count:', boxNutCount, 'kid count:', hamsterNutCount);
-                    guideLine.style.display = 'none';
-
-                    // Speak final prompt when box has correctAnswer sodas and hamster has num3 sodas
-                    if (boxNutCount === correctAnswer && hamsterNutCount === num3) {
-                        const finalPrompt = langDict[currentLanguage].finalPrompt;
-                        console.log('Final prompt:', finalPrompt);
-                        speak(finalPrompt);
-                    }
-                }
-            });
-
-            // Drag back to nut-area
-            nutArea.addEventListener('dragover', e => {
-                e.preventDefault();
-            });
-
-            nutArea.addEventListener('drop', e => {
-                e.preventDefault();
-                const draggedNut = document.querySelector('.box-nut.dragging');
-                if (draggedNut) {
-                    const index = draggedNut.getAttribute('data-index');
-                    const originalNut = document.querySelector(`.nut[data-index="${index}"]`);
-                    originalNut.style.display = 'block';
-                    originalNut.setAttribute('draggable', 'true');
-                    draggedNut.remove();
-                    boxNutCount--;
-                    console.log('Soda returned to nut-area, box count:', boxNutCount);
-                    guideLine.style.display = 'none';
-                }
-            });
-
-            // Drag back to box from hamster
-            boxArea.addEventListener('dragover', e => {
-                e.preventDefault();
-            });
-
-            boxArea.addEventListener('drop', e => {
-                e.preventDefault();
-                const draggedNut = document.querySelector('.hamster-nut.dragging');
-                if (draggedNut) {
-                    const index = draggedNut.getAttribute('data-index');
-                    draggedNut.remove();
-                    hamsterNutCount--;
-                    boxNutCount++;
-
-                    const boxNut = document.createElement('img');
-                    boxNut.src = 'assets/images/cola.png';
-                    boxNut.className = 'box-nut';
-                    boxNut.setAttribute('data-index', index);
-                    boxNut.setAttribute('draggable', 'true');
-                    document.getElementById('box-nuts').appendChild(boxNut);
-
-                    boxNut.addEventListener('dragstart', () => {
-                        boxNut.classList.add('dragging');
-                        guideLine.style.display = 'block';
-                        requestAnimationFrame(() => updateGuideLine({ clientX: boxNut.getBoundingClientRect().left, clientY: boxNut.getBoundingClientRect().top }, hamster));
-                    });
-
-                    boxNut.addEventListener('drag', (e) => {
-                        updateGuideLine(e, hamster);
-                    });
-
-                    boxNut.addEventListener('dragend', () => {
-                        boxNut.classList.remove('dragging');
-                        guideLine.style.display = 'none';
-                    });
-
-                    console.log('Soda returned to box, box count:', boxNutCount, 'kid count:', hamsterNutCount);
-                    guideLine.style.display = 'none';
-                }
-            });
-
-            // Number grid drag and drop
-            const numberCells = document.querySelectorAll('.number-cell');
-            const answerBox = document.getElementById('answer-box');
-
-            numberCells.forEach(cell => {
-                cell.addEventListener('dragstart', () => {
-                    cell.classList.add('dragging');
-                    console.log('Dragging number:', cell.getAttribute('data-number'));
-                });
-
-                cell.addEventListener('dragend', () => {
-                    cell.classList.remove('dragging');
-                });
-            });
-
-            answerBox.addEventListener('dragover', e => {
-                e.preventDefault();
-            });
-
-            answerBox.addEventListener('drop', e => {
-                e.preventDefault();
-                const draggedCell = document.querySelector('.number-cell.dragging');
-                if (draggedCell) {
-                    selectedNumber = parseInt(draggedCell.getAttribute('data-number'));
-                    answerBox.textContent = selectedNumber;
-                    console.log('Dropped number:', selectedNumber);
-                }
-            });
-
-            // Confirm button
-            document.getElementById('confirm-button').addEventListener('click', () => {
-                console.log('Confirm button clicked, selectedNumber:', selectedNumber, 'boxNutCount:', boxNutCount, 'hamsterNutCount:', hamsterNutCount);
-                const feedback = document.getElementById('feedback');
-                if (boxNutCount === 0 && hamsterNutCount === 0) {
-                    feedback.textContent = langDict[currentLanguage].noNut;
-                    feedback.className = 'feedback incorrect';
-                    feedback.style.display = 'block';
-                    setTimeout(() => {
-                        feedback.style.display = 'none';
-                    }, 2000);
-                } else if (selectedNumber === null) {
-                    feedback.textContent = langDict[currentLanguage].noNumber;
-                    feedback.className = 'feedback incorrect';
-                    feedback.style.display = 'block';
-                    setTimeout(() => {
-                        feedback.style.display = 'none';
-                    }, 2000);
-                } else {
-                    checkAnswer(selectedNumber);
-                }
-            });
-
-            // Check answer
-            function checkAnswer(number) {
-                const feedback = document.getElementById('feedback');
-                const audio = new Audio();
-                totalQuestions++;
-
-                if (number === correctAnswer && boxNutCount === correctAnswer && hamsterNutCount === num3) {
-                    correctQuestions++;
-                    feedback.textContent = langDict[currentLanguage].correct;
-                    feedback.className = 'feedback correct';
-                    audio.src = 'assets/audio/suc.mp3';
-                    audio.play();
-                    // Trigger hamster bounce animation
-                    hamster.classList.add('bounce');
-                    setTimeout(() => {
-                        hamster.classList.remove('bounce');
-                    }, 1000); // Remove animation class after 1s (0.5s × 2)
-                } else {
-                    feedback.textContent = langDict[currentLanguage].incorrect;
-                    feedback.className = 'feedback incorrect';
-                    audio.src = 'assets/audio/err.mp3';
-                    audio.play();
-                }
-
-                // Always proceed to next level or complete game
-                if (currentLevel < maxLevels) {
-                    currentLevel++;
-                    setTimeout(generateQuestion, 1000);
-                } else {
-                    setTimeout(() => {
-                        document.getElementById('game-complete').style.display = 'block';
-                        document.querySelector('.game-area').style.pointerEvents = 'none';
-                    }, 2000);
-                }
-                saveGameState();
-            }
-
-            // Games link smooth scroll
-            const gamesLink = document.querySelector('a[href="#games"]');
-            if (gamesLink) {
-                gamesLink.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const targetSection = document.querySelector('.game-container');
-                    if (targetSection) {
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            }
-
-            // Initialize game
-            loadGameState();
-            updateLanguage();
-            speak(langDict[currentLanguage].welcomePrompt);
-            generateQuestion();
-        });
-    </script>
+    <script src="assets/js/game4.js"></script>
 </body>
-
 </html>
