@@ -1,20 +1,15 @@
 /* Header Styles */
-.header-area, .header-area.header-sticky {
+.header-area, .header-area.header-sticky, .header-area.background-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 500; /* Lower than money-area */
   background-color: transparent;
   box-shadow: none;
   display: block !important;
   opacity: 1 !important;
   visibility: visible !important;
-}
-
-.header-area.background-header {
-  background-color: transparent;
-  box-shadow: none;
 }
 
 /* Game Container */
@@ -23,8 +18,25 @@
   justify-content: center;
   align-items: center;
   min-height: 80vh;
-  padding: 0px;
-  z-index: 500;
+  padding: 0;
+  z-index: 400; /* Lower than money-area */
+}
+
+/* Game Area */
+.game-area {
+  position: relative;
+  width: 100%;
+  max-width: 1600px;
+  height: 600px;
+  background-image: url('../images/game4bg.png');
+  background-size: cover;
+  background-position: center;
+  border: 5px solid #4CAF50;
+  border-radius: 10px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Level Controls */
@@ -35,17 +47,21 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  z-index: 300; /* Lower than money-area */
 }
 
-#lang-toggle {
+#lang-toggle, #reset-button {
   padding: 5px 10px;
   font-size: 16px;
-  background-color: #a7af4c;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+#lang-toggle {
+  background-color: #a7af4c;
 }
 
 #lang-toggle:hover {
@@ -53,53 +69,19 @@
 }
 
 #reset-button {
-  padding: 5px 10px;
-  font-size: 16px;
   background-color: #af4c4c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 #reset-button:hover {
   background-color: #a04545;
 }
 
-/* Level Display */
 .level-display {
   font-size: 24px;
   font-weight: bold;
   color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
-}
-
-/* Game Area */
-.game-area {
-  position: relative;
-  width: 1600px;
-  height: 600px;
-  background-image: url('../images/game4bg.png');
-  background-size: cover;
-  background-position: center;
-  border: 5px solid #4CAF50;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Guide Line */
-.guide-line {
-  position: absolute;
-  border: 2px dashed #df0a03;
-  height: 2px;
-  background: transparent;
-  display: none;
-  transform-origin: 0 0;
 }
 
 /* Math Question */
@@ -112,6 +94,7 @@
   color: #333;
   display: flex;
   align-items: center;
+  z-index: 200; /* Lower than money-area */
 }
 
 .answer-box {
@@ -128,7 +111,7 @@
   border: 2px dashed #333;
 }
 
-#confirm-button {
+#confirm-button, #resetanw {
   margin-left: 10px;
   padding: 10px 20px;
   font-size: 20px;
@@ -140,33 +123,19 @@
   transition: background-color 0.3s;
 }
 
-#confirm-button:hover {
+#confirm-button:hover, #resetanw:hover {
   background-color: #1a25ff;
-}
-
-#resetanw {
-  margin-left: 10px;
-  padding: 10px 20px;
-  font-size: 20px;
-  background-color: #2d67fb;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 #listen-again {
   position: absolute;
-  top: 0px;
+  top: -10px;
   left: -220px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
   margin-left: -90px;
-  padding: 10px;
+  padding: 5px;
   font-size: 24px;
   background-color: #ffdd1d;
-  color: rgb(0, 0, 0);
+  color: #000;
   border: none;
   border-radius: 100px;
   cursor: pointer;
@@ -175,6 +144,78 @@
 
 #listen-again:hover {
   background-color: #ff941a;
+}
+
+/* Money Area */
+.money-area {
+  position: absolute;
+  bottom: 340px; /* Below math-question (20px top + 50px height + 10px margin) */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex; /* Always visible initially */
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  width: 300px; /* Fixed width to arrange money */
+  z-index: 1000; /* Highest layer */
+}
+
+/* Money arrangement */
+.money[data-value="10"], .money[data-value="20"] {
+  order: -1; /* $10 and $20 on the left */
+}
+
+.money[data-value="50"], .money[data-value="100"] {
+  order: 1; /* $50 and $100 on the right */
+}
+
+/* Kid Image */
+.kid-area {
+  position: absolute;
+  top: 80px; /* Same position as money-area */
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* Hidden initially */
+  z-index: 1000; /* Same as money-area */
+}
+
+#kid {
+  width: 50px;
+  height: 100px;
+}
+
+/* Change Area */
+.change-area {
+  position: absolute;
+  top: 50px; /* Above hamster */
+  right: 0; /* Align with hamster */
+  transform: translateX(-10%);
+  display: none; /* Initially hidden */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  z-index: 900; /* Below money-area/kid-area but above others */
+}
+
+/* Money and Change Money */
+.money {
+  width: 120px;
+  height: 60px;
+  cursor: move;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.change-money {
+  width: 40px;
+  height: 20px;
+  cursor: move;
+  user-select: none;
+  pointer-events: auto;
 }
 
 /* Number Grid */
@@ -186,6 +227,7 @@
   flex-wrap: wrap;
   width: 180px;
   gap: 5px;
+  z-index: 200;
 }
 
 .number-cell {
@@ -224,6 +266,7 @@
   flex-direction: column;
   gap: 37px;
   padding: 15px;
+  z-index: 200;
 }
 
 .nut-row {
@@ -250,20 +293,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.money-area {
-  display: none;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.money {
-  width: 60px;
-  height: 30px;
-  cursor: move;
-  user-select: none;
+  z-index: 200;
 }
 
 #box {
@@ -285,8 +315,7 @@
   cursor: move;
 }
 
-/* Cash Register Display現時是我現在的code,現在問題是當購物籃隱藏時 money-area的錢要顯視出來,然後要有ai和引遵線提醒要將金錢比收銀員,當收銀員收到的金額大過零食價值總數
-money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計算器和change-money就會在收銀員上方顯示.顯示番收到的金額-總數,ai會問 要找番多少比小朋友?*/
+/* Cash Register Display */
 .cash-register {
   position: absolute;
   bottom: 100px;
@@ -304,6 +333,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   font-weight: bold;
   color: #333;
   padding: 5px;
+  z-index: 200;
 }
 
 #cash-display {
@@ -319,28 +349,15 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   padding: 0 10px;
 }
 
-.change-area {
-  display: none;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 5px;
-}
-
-.change-money {
-  width: 40px;
-  height: 20px;
-  cursor: move;
-  user-select: none;
-}
-
 /* Hamster Area */
 .hamster-area {
   position: absolute;
   bottom: 30px;
-  right: 0px;
+  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 200;
 }
 
 #cash-calculator {
@@ -348,6 +365,9 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
+  position: absolute;
+  top: -40px; /* Above hamster */
+  right: 0;
 }
 
 #hamster-nuts {
@@ -378,6 +398,17 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   50% { transform: translateY(-20px); }
 }
 
+/* Guide Line */
+.guide-line {
+  position: absolute;
+  border: 2px dashed #df0a03;
+  height: 2px;
+  background: transparent;
+  display: none;
+  transform-origin: 0 0;
+  z-index: 800; /* Below money-area/kid-area */
+}
+
 /* Feedback */
 .feedback {
   position: absolute;
@@ -389,6 +420,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   display: none;
+  z-index: 700; /* Below money-area/kid-area */
 }
 
 .feedback.correct {
@@ -412,6 +444,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   border-radius: 10px;
   text-align: center;
   display: none;
+  z-index: 700;
 }
 
 .game-complete h2 {
@@ -441,7 +474,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 500;
     background-color: transparent;
     display: block !important;
     opacity: 1 !important;
@@ -450,6 +483,14 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
 
   .game-container {
     padding: 10px;
+    z-index: 400;
+  }
+
+  .game-area {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 3;
+    overflow: visible;
   }
 
   .level-controls {
@@ -458,6 +499,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
+    z-index: 300;
   }
 
   #lang-toggle, #reset-button {
@@ -470,16 +512,11 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     padding: 3px 6px;
   }
 
-  .game-area {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 8 / 3;
-  }
-
   .math-question {
     top: 10px;
     left: 10%;
     font-size: 20px;
+    z-index: 200;
   }
 
   .answer-box {
@@ -489,11 +526,56 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     font-size: 16px;
   }
 
+  .money-area {
+    bottom: 10px; /* Below math-question (10px top + 30px height + 10px margin) */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; /* Always visible initially */
+    gap: 5px;
+    padding: 5px;
+    width: 200px; /* Adjusted for mobile */
+    z-index: 1000;
+  }
+
+  .kid-area {
+    top: 50px; /* Same position as money-area */
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* Hidden initially */
+    z-index: 1000;
+  }
+
+  #kid {
+    width: 60px;
+    height: 60px;
+  }
+
+  .change-area {
+    top: 30px; /* Above hamster */
+    right: 5%;
+    transform: translateX(-10%);
+    display: none;
+    gap: 3px;
+    padding: 5px;
+    z-index: 900;
+  }
+
+  .money {
+    width: 40px;
+    height: 20px;
+  }
+
+  .change-money {
+    width: 30px;
+    height: 15px;
+  }
+
   .number-grid {
     bottom: 10px;
     right: 35%;
     width: 100px;
     gap: 3px;
+    z-index: 200;
   }
 
   .number-cell {
@@ -510,6 +592,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     transform: translateX(-50%);
     padding: 10px;
     gap: 5px;
+    z-index: 200;
   }
 
   .nut-row {
@@ -524,15 +607,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   .box-area {
     bottom: 10px;
     right: 70%;
-  }
-
-  .money-area {
-    gap: 5px;
-  }
-
-  .money {
-    width: 40px;
-    height: 20px;
+    z-index: 200;
   }
 
   .box-nut {
@@ -547,29 +622,19 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     height: 100px;
     font-size: 12px;
     padding: 5px;
-  }
-
-  .change-area {
-    gap: 3px;
-  }
-
-  .change-money {
-    width: 30px;
-    height: 15px;
+    z-index: 200;
   }
 
   .hamster-area {
     bottom: 10px;
     right: 5%;
+    z-index: 200;
   }
 
   #cash-calculator {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-
-  #hamster-nuts {
-    gap: 3px;
+    top: -30px; /* Above hamster */
+    right: 0;
+    font-size: 16px;
   }
 
   .hamster-nut {
@@ -582,13 +647,7 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
     height: 125px;
   }
 
-  #confirm-button {
-    margin-left: 5px;
-    padding: 5px 10px;
-    font-size: 16px;
-  }
-
-  #resetanw {
+  #confirm-button, #resetanw {
     margin-left: 5px;
     padding: 5px 10px;
     font-size: 16px;
@@ -606,10 +665,12 @@ money-area就會隱藏,在同樣位置會有一個kid.png顯示,同樣收銀計�
   .feedback {
     font-size: 24px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 700;
   }
 
   .game-complete {
     padding: 10px;
+    z-index: 700;
   }
 
   .game-complete h2 {
