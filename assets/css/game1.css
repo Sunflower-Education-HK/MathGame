@@ -68,8 +68,7 @@
 }
 
 
-/* Level Display現在發現了一個新的問題,我發現我答錯了一次,我改為正確答案後都是依然說我錯的.還有隱藏but.png同時要隱藏buy上方的零食,同時要show(kid.png)出來,收銀計算器(是另外一個新的方形)和change-money就會在收銀員上方顯示.顯示番收到的金額-總數,ai會問 要找番多少比小朋友?
-之後可以把change-money拉到kid.png身上如果是正確就同樣出現正確聲音. */
+/* Level Display */
 .level-display {
   font-size: 24px;
   font-weight: bold;

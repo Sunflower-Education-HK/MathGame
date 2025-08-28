@@ -1,15 +1,15 @@
 /* Header Styles */
 .header-area, .header-area.header-sticky, .header-area.background-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 500; /* Lower than money-area */
-  background-color: transparent;
-  box-shadow: none;
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 500;
+    background-color: transparent;
+    box-shadow: none;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* Game Container */
@@ -18,25 +18,26 @@
   justify-content: center;
   align-items: center;
   min-height: 80vh;
-  padding: 0;
-  z-index: 400; /* Lower than money-area */
+  padding: 0px;
+  z-index: 500;
 }
+
 
 /* Game Area */
 .game-area {
-  position: relative;
-  width: 100%;
-  max-width: 1600px;
-  height: 600px;
-  background-image: url('../images/game4bg.png');
-  background-size: cover;
-  background-position: center;
-  border: 5px solid #4CAF50;
-  border-radius: 10px;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    height: 600px;
+    background-image: url('../images/game4bg.png');
+    background-size: cover;
+    background-position: center;
+    border: 5px solid #4CAF50;
+    border-radius: 10px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Level Controls */
@@ -47,639 +48,639 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 300; /* Lower than money-area */
 }
 
 #lang-toggle, #reset-button {
-  padding: 5px 10px;
-  font-size: 16px;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #lang-toggle {
-  background-color: #a7af4c;
+    background-color: #a7af4c;
 }
 
 #lang-toggle:hover {
-  background-color: #82a045;
+    background-color: #82a045;
 }
 
 #reset-button {
-  background-color: #af4c4c;
+    background-color: #af4c4c;
 }
 
 #reset-button:hover {
-  background-color: #a04545;
+    background-color: #a04545;
 }
 
 .level-display {
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 /* Math Question */
 .math-question {
-  position: absolute;
-  top: 20px;
-  left: 320px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  display: flex;
-  align-items: center;
-  z-index: 200; /* Lower than money-area */
+    position: absolute;
+    top: 20px;
+    left: 320px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    z-index: 1100;
 }
 
 .answer-box {
-  width: 60px;
-  height: 50px;
-  margin-left: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+    width: 60px;
+    height: 50px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
 }
 
 .dashed-box {
-  border: 2px dashed #333;
+    border: 2px dashed #333;
 }
 
 #confirm-button, #resetanw {
-  margin-left: 10px;
-  padding: 10px 20px;
-  font-size: 20px;
-  background-color: #2d67fb;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #2d67fb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #confirm-button:hover, #resetanw:hover {
-  background-color: #1a25ff;
+    background-color: #1a25ff;
 }
 
 #listen-again {
-  position: absolute;
-  top: -10px;
-  left: -220px;
-  margin-left: -90px;
-  padding: 5px;
-  font-size: 24px;
-  background-color: #ffdd1d;
-  color: #000;
-  border: none;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    position: absolute;
+    top: -10px;
+    left: -220px;
+    margin-left: -90px;
+    padding: 5px;
+    font-size: 24px;
+    background-color: #ffdd1d;
+    color: #000;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #listen-again:hover {
-  background-color: #ff941a;
+    background-color: #ff941a;
 }
 
 /* Money Area */
 .money-area {
-  position: absolute;
-  bottom: 340px; /* Below math-question (20px top + 50px height + 10px margin) */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex; /* Always visible initially */
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  width: 300px; /* Fixed width to arrange money */
-  z-index: 1000; /* Highest layer */
+    position: absolute;
+    bottom: 340px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    width: 300px;
+    z-index: 1000;
 }
 
 /* Money arrangement */
 .money[data-value="10"], .money[data-value="20"] {
-  order: -1; /* $10 and $20 on the left */
+    order: -1;
 }
 
 .money[data-value="50"], .money[data-value="100"] {
-  order: 1; /* $50 and $100 on the right */
-}
-
-/* Kid Image */
-.kid-area {
-  position: absolute;
-  top: 80px; /* Same position as money-area */
-  left: 50%;
-  transform: translateX(-50%);
-  display: none; /* Hidden initially */
-  z-index: 1000; /* Same as money-area */
-}
-
-#kid {
-  width: 50px;
-  height: 100px;
+    order: 1;
 }
 
 /* Change Area */
 .change-area {
-  position: absolute;
-  top: 50px; /* Above hamster */
-  right: 0; /* Align with hamster */
-  transform: translateX(-10%);
-  display: none; /* Initially hidden */
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  padding: 10px;
-  z-index: 900; /* Below money-area/kid-area but above others */
+    position: absolute;
+    top: -100px; /* 收銀員上方 100px，與 #cash-calculator 分開 */
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中，與收銀員對齊 */
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    z-index: 900;
 }
 
 /* Money and Change Money */
 .money {
-  width: 120px;
-  height: 60px;
-  cursor: move;
-  user-select: none;
-  pointer-events: auto;
+    width: 120px;
+    height: 60px;
+    cursor: move;
+    user-select: none;
+    pointer-events: auto;
 }
 
 .change-money {
-  width: 40px;
-  height: 20px;
-  cursor: move;
-  user-select: none;
-  pointer-events: auto;
+    width: 60px;
+    height: 26px;
+    cursor: move;
+    user-select: none;
+    pointer-events: auto;
 }
 
 /* Number Grid */
 .number-grid {
-  position: absolute;
-  bottom: 20px;
-  right: 350px;
-  display: flex;
-  flex-wrap: wrap;
-  width: 180px;
-  gap: 5px;
-  z-index: 200;
+    position: absolute;
+    bottom: 20px;
+    right: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 180px;
+    gap: 5px;
+    z-index: 200;
 }
 
 .number-cell {
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(135deg, #ffeb3b, #fbc02d);
-  border: 2px solid #333;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.2s;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #ffeb3b, #fbc02d);
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
 }
 
 .number-cell:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .number-cell:active {
-  transform: scale(0.9);
+    transform: scale(0.9);
 }
 
 /* Nut Area */
 .nut-area {
-  position: absolute;
-  bottom: 60px;
-  left: 180px;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 37px;
-  padding: 15px;
-  z-index: 200;
+    position: absolute;
+    bottom: 60px;
+    left: 180px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 37px;
+    padding: 15px;
+    z-index: 200;
 }
 
 .nut-row {
-  display: flex;
-  gap: 15px;
+    display: flex;
+    gap: 15px;
 }
 
 .nut {
-  width: 50px;
-  height: 70px;
-  cursor: move;
-  user-select: none;
+    width: 50px;
+    height: 70px;
+    cursor: move;
+    user-select: none;
 }
 
 .nut.dragging {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 /* Box Area */
 .box-area {
-  position: absolute;
-  bottom: 20px;
-  right: 550px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 200;
+    position: absolute;
+    bottom: 20px;
+    right: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 200;
 }
 
 #box {
-  width: 230px;
-  height: 200px;
+    width: 230px;
+    height: 200px;
 }
 
 #box-nuts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  max-width: 220px;
-  margin-bottom: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-width: 220px;
+    margin-bottom: 5px;
 }
 
 .box-nut {
-  width: 50px;
-  height: 70px;
-  cursor: move;
+    width: 50px;
+    height: 70px;
+    cursor: move;
+}
+
+/* Kid Area */
+.kid-area {
+    position: absolute;
+    bottom: 20px;
+    right: 550px;
+    display: none; /* 初始隱藏，購物籃隱藏時顯示 */
+    flex-direction: column;
+    align-items: center;
+    z-index: 200;
+}
+
+#kid {
+    width: 230px;
+    height: 200px;
 }
 
 /* Cash Register Display */
 .cash-register {
-  position: absolute;
-  bottom: 100px;
-  right: 350px;
-  width: 180px;
-  height: 250px;
-  background: #ff924f;
-  border: 2px solid #333;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  padding: 5px;
-  z-index: 200;
+    position: absolute;
+    bottom: 100px;
+    right: 350px;
+    width: 180px;
+    height: 250px;
+    background: #ff924f;
+    border: 2px solid #333;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    padding: 5px;
+    z-index: 200;
 }
 
 #cash-display {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
 }
 
 .cash-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
 /* Hamster Area */
 .hamster-area {
-  position: absolute;
-  bottom: 30px;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 200;
+    position: absolute;
+    bottom: 30px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 200;
 }
 
 #cash-calculator {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-  position: absolute;
-  top: -40px; /* Above hamster */
-  right: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    position: absolute;
+    top: -120px; /* 收銀員上方 120px，與 change-area 分開 */
+    left: 50%;
+    transform: translateX(-50%); /* 水平居中，與收銀員對齊 */
 }
 
 #hamster-nuts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
 }
 
 .hamster-nut {
-  width: 60px;
-  height: 30px;
-  cursor: move;
+    width: 60px;
+    height: 30px;
+    cursor: move;
 }
 
 #hamster {
-  width: 320px;
-  height: 250px;
-  transition: transform 0.3s ease;
+    width: 320px;
+    height: 250px;
+    transition: transform 0.3s ease;
 }
 
 .hamster-area.bounce {
-  animation: bounce 0.5s ease 2;
+    animation: bounce 0.5s ease 2;
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
 }
 
 /* Guide Line */
 .guide-line {
-  position: absolute;
-  border: 2px dashed #df0a03;
-  height: 2px;
-  background: transparent;
-  display: none;
-  transform-origin: 0 0;
-  z-index: 800; /* Below money-area/kid-area */
+    position: absolute;
+    border: 2px dashed #df0a03;
+    height: 2px;
+    background: transparent;
+    display: none;
+    transform-origin: 0 0;
+    z-index: 800;
 }
 
 /* Feedback */
 .feedback {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  display: none;
-  z-index: 700; /* Below money-area/kid-area */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 700;
 }
 
 .feedback.correct {
-  color: #00f708;
-  display: block;
+    color: #00f708;
+    display: block;
 }
 
 .feedback.incorrect {
-  color: #F44336;
-  display: block;
+    color: #F44336;
+    display: block;
 }
 
 /* Game Complete */
 .game-complete {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  display: none;
-  z-index: 700;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+    z-index: 700;
 }
 
 .game-complete h2 {
-  color: #4CAF50;
-  font-size: 36px;
-  margin-bottom: 20px;
+    color: #4CAF50;
+    font-size: 36px;
+    margin-bottom: 20px;
 }
 
 .game-complete button {
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .game-complete button:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
 /* Responsive Design for Mobile */
 @media (max-width: 768px) {
-  .header-area, .header-area.header-sticky, .header-area.background-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 500;
-    background-color: transparent;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
+    .header-area, .header-area.header-sticky, .header-area.background-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 500;
+        background-color: transparent;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
 
-  .game-container {
-    padding: 10px;
-    z-index: 400;
-  }
+    .game-container {
+        padding: 10px;
+        z-index: 400;
+    }
 
-  .game-area {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 8 / 3;
-    overflow: visible;
-  }
+    .game-area {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 8 / 3;
+        overflow: visible;
+    }
 
-  .level-controls {
-    top: 5px;
-    left: 10px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    z-index: 300;
-  }
+    .level-controls {
+        top: 5px;
+        left: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        z-index: 300;
+    }
 
-  #lang-toggle, #reset-button {
-    padding: 3px 6px;
-    font-size: 12px;
-  }
+    #lang-toggle, #reset-button {
+        padding: 3px 6px;
+        font-size: 12px;
+    }
 
-  .level-display {
-    font-size: 16px;
-    padding: 3px 6px;
-  }
+    .level-display {
+        font-size: 16px;
+        padding: 3px 6px;
+    }
 
-  .math-question {
-    top: 10px;
-    left: 10%;
-    font-size: 20px;
-    z-index: 200;
-  }
+    .math-question {
+        top: 10px;
+        left: 10%;
+        font-size: 20px;
+        z-index: 1100;
+    }
 
-  .answer-box {
-    width: 40px;
-    height: 30px;
-    margin-left: 5px;
-    font-size: 16px;
-  }
+    .answer-box {
+        width: 40px;
+        height: 30px;
+        margin-left: 5px;
+        font-size: 16px;
+    }
 
-  .money-area {
-    bottom: 10px; /* Below math-question (10px top + 30px height + 10px margin) */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex; /* Always visible initially */
-    gap: 5px;
-    padding: 5px;
-    width: 200px; /* Adjusted for mobile */
-    z-index: 1000;
-  }
+    .money-area {
+        bottom: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 5px;
+        padding: 5px;
+        width: 200px;
+        z-index: 1000;
+    }
 
-  .kid-area {
-    top: 50px; /* Same position as money-area */
-    left: 50%;
-    transform: translateX(-50%);
-    display: none; /* Hidden initially */
-    z-index: 1000;
-  }
+    .change-area {
+        top: -60px; /* 手機端收銀員上方 60px */
+        left: 50%;
+        transform: translateX(-50%); /* 水平居中 */
+        display: none;
+        gap: 3px;
+        padding: 5px;
+        z-index: 900;
+    }
 
-  #kid {
-    width: 60px;
-    height: 60px;
-  }
+    .money {
+        width: 40px;
+        height: 20px;
+    }
 
-  .change-area {
-    top: 30px; /* Above hamster */
-    right: 5%;
-    transform: translateX(-10%);
-    display: none;
-    gap: 3px;
-    padding: 5px;
-    z-index: 900;
-  }
+    .change-money {
+        width: 30px;
+        height: 15px;
+    }
 
-  .money {
-    width: 40px;
-    height: 20px;
-  }
+    .number-grid {
+        bottom: 10px;
+        right: 35%;
+        width: 100px;
+        gap: 3px;
+        z-index: 200;
+    }
 
-  .change-money {
-    width: 30px;
-    height: 15px;
-  }
+    .number-cell {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
 
-  .number-grid {
-    bottom: 10px;
-    right: 35%;
-    width: 100px;
-    gap: 3px;
-    z-index: 200;
-  }
+    .nut-area {
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px;
+        gap: 5px;
+        z-index: 200;
+    }
 
-  .number-cell {
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  }
+    .nut-row {
+        gap: 5px;
+    }
 
-  .nut-area {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px;
-    gap: 5px;
-    z-index: 200;
-  }
+    .nut {
+        width: 40px;
+        height: 66px;
+    }
 
-  .nut-row {
-    gap: 5px;
-  }
+    .box-area {
+        bottom: 10px;
+        right: 70%;
+        z-index: 200;
+    }
 
-  .nut {
-    width: 40px;
-    height: 66px;
-  }
+    .kid-area {
+        bottom: 10px;
+        right: 70%;
+        display: none; /* 初始隱藏 */
+        z-index: 200;
+    }
 
-  .box-area {
-    bottom: 10px;
-    right: 70%;
-    z-index: 200;
-  }
+    #box, #kid {
+        width: 100px;
+        height: 100px;
+    }
 
-  .box-nut {
-    width: 15px;
-    height: 25px;
-  }
+    .box-nut {
+        width: 15px;
+        height: 25px;
+    }
 
-  .cash-register {
-    bottom: 10px;
-    right: 35%;
-    width: 100px;
-    height: 100px;
-    font-size: 12px;
-    padding: 5px;
-    z-index: 200;
-  }
+    .cash-register {
+        bottom: 10px;
+        right: 35%;
+        width: 100px;
+        height: 100px;
+        font-size: 12px;
+        padding: 5px;
+        z-index: 200;
+    }
 
-  .hamster-area {
-    bottom: 10px;
-    right: 5%;
-    z-index: 200;
-  }
+    .hamster-area {
+        bottom: 10px;
+        right: 5%;
+        z-index: 200;
+    }
 
-  #cash-calculator {
-    top: -30px; /* Above hamster */
-    right: 0;
-    font-size: 16px;
-  }
+    #cash-calculator {
+        top: -80px; /* 手機端收銀員上方 80px */
+        left: 50%;
+        transform: translateX(-50%); /* 水平居中 */
+        font-size: 16px;
+    }
 
-  .hamster-nut {
-    width: 40px;
-    height: 20px;
-  }
+    .hamster-nut {
+        width: 40px;
+        height: 20px;
+    }
 
-  #hamster {
-    width: 100px;
-    height: 125px;
-  }
+    #hamster {
+        width: 100px;
+        height: 125px;
+    }
 
-  #confirm-button, #resetanw {
-    margin-left: 5px;
-    padding: 5px 10px;
-    font-size: 16px;
-  }
+    #confirm-button, #resetanw {
+        margin-left: 5px;
+        padding: 5px 10px;
+        font-size: 16px;
+    }
 
-  #listen-again {
-    top: 5px;
-    left: -15%;
-    margin-left: -45px;
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 50px;
-  }
+    #listen-again {
+        top: 5px;
+        left: -15%;
+        margin-left: -45px;
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 50px;
+    }
 
-  .feedback {
-    font-size: 24px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    z-index: 700;
-  }
+    .feedback {
+        font-size: 24px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        z-index: 700;
+    }
 
-  .game-complete {
-    padding: 10px;
-    z-index: 700;
-  }
+    .game-complete {
+        padding: 10px;
+        z-index: 700;
+    }
 
-  .game-complete h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
+    .game-complete h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
 
-  .game-complete button {
-    padding: 5px 10px;
-    font-size: 12px;
-  }
+    .game-complete button {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
 }

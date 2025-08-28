@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             thirdPrompt: '小朋友仲想要多{num3}{item3}',
             totalPrompt: '一共要幾多錢？',
             moneyPrompt: '小朋友你要比多少錢呀？請將錢拖到收銀員！',
-            changePrompt: '要找番多少比小朋友？',
+            changePrompt: '要找番多少比小朋友？請將找零拖到小朋友！',
             tryAgain: '可以再試一下',
             listenAgain: '🔊聽一次'
         },
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             thirdPrompt: 'You also want {num3} more {item3}',
             totalPrompt: 'How much money in total?',
             moneyPrompt: 'How much money do you need to pay? Drag the money to the cashier!',
-            changePrompt: 'How much change should I give back to the kid?',
+            changePrompt: 'How much change should I give back to the kid? Drag the change to the kid!',
             tryAgain: 'You can try again',
             listenAgain: '🔊Listen'
         }
@@ -159,9 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 更新關卡顯示
     function updateLevelDisplay() {
-        const levelDisplay = document.getElementById('level-display');
-        levelDisplay.className = `level-display level-${currentLevel}`;
-        document.getElementById('level-counter').textContent = currentLevel;
+        const levelDisplay = document.getElementById('level-counter');
+        levelDisplay.textContent = `${currentLevel}/40`;
         updateLanguage();
     }
 
@@ -211,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.getElementById('resetanw').addEventListener('click', () => {
             selectedNumber = '';
+            isAnswerCorrect = false; // 重置 isAnswerCorrect 以允許重新檢查答案
             document.getElementById('answer-box').textContent = selectedNumber;
             console.log('Reset answer clicked, selectedNumber:', selectedNumber);
         });
@@ -308,7 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleDragStart(e) {
         const item = e.target;
         item.classList.add('dragging');
-        const target = item.classList.contains('nut') ? document.getElementById('box') : document.getElementById('hamster');
+        const target = item.classList.contains('nut') ? document.getElementById('box') :
+                      item.classList.contains('money') ? document.getElementById('hamster') :
+                      document.querySelector('.kid-area');
         updateGuideLine(e, target);
         document.getElementById('guide-line').style.display = 'block';
         requestAnimationFrame(() => updateGuideLine(e, target));
@@ -317,7 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleDrag(e) {
         const item = e.target;
-        const target = item.classList.contains('nut') ? document.getElementById('box') : document.getElementById('hamster');
+        const target = item.classList.contains('nut') ? document.getElementById('box') :
+                      item.classList.contains('money') ? document.getElementById('hamster') :
+                      document.querySelector('.kid-area');
         updateGuideLine(e, target);
     }
 
@@ -399,6 +403,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 顯示找零引導線（從 change-area 到 kid-area）
+    function showChangeGuideLine() {
+        const changeArea = document.querySelector('.change-area');
+        const kid = document.querySelector('.kid-area');
+        const guideLine = document.getElementById('guide-line');
+        const gameArea = document.querySelector('.game-area');
+        const changeAreaRect = changeArea.getBoundingClientRect();
+        const kidRect = kid.getBoundingClientRect();
+        const gameAreaRect = gameArea.getBoundingClientRect();
+
+        const startX = changeAreaRect.left + changeAreaRect.width / 2 - gameAreaRect.left;
+        const startY = changeAreaRect.top + changeAreaRect.height / 2 - gameAreaRect.top;
+        const endX = kidRect.left + kidRect.width / 2 - gameAreaRect.left;
+        const endY = kidRect.top + kidRect.height / 2 - gameAreaRect.top;
+
+        const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+        const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+
+        guideLine.style.width = `${length}px`;
+        guideLine.style.left = `${startX}px`;
+        guideLine.style.top = `${startY}px`;
+        guideLine.style.transform = `rotate(${angle}deg)`;
+        guideLine.style.transformOrigin = '0 0';
+        guideLine.style.display = 'block';
+
+        let opacity = 1;
+        const blinkInterval = setInterval(() => {
+            opacity = opacity === 1 ? 0.5 : 1;
+            guideLine.style.opacity = opacity;
+        }, 500);
+
+        const changeItems = document.querySelectorAll('.change-money');
+        changeItems.forEach(item => {
+            item.removeEventListener('dragstart', handleChangeDragStart);
+            item.addEventListener('dragstart', handleChangeDragStart);
+        });
+
+        function handleChangeDragStart() {
+            clearInterval(blinkInterval);
+            guideLine.style.opacity = 1;
+            guideLine.style.display = 'block';
+        }
+
+        kid.removeEventListener('drop', handleKidDrop);
+        kid.addEventListener('drop', handleKidDrop);
+
+        function handleKidDrop() {
+            clearInterval(blinkInterval);
+            guideLine.style.display = 'none';
+        }
+    }
+
     // 生成新數學問題
     function generateQuestion() {
         const items = ['chips', 'cola', 'candy', 'milk'];
@@ -436,7 +492,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('game-complete').style.display = 'none';
         document.getElementById('guide-line').style.display = 'none';
         document.querySelector('.change-area').style.display = 'none';
+        document.querySelector('.box-area').style.display = 'flex';
+        document.querySelector('.kid-area').style.display = 'none';
         document.querySelector('#box').style.display = 'block';
+        document.querySelector('#box-nuts').style.display = 'flex';
         document.querySelector('.money-area').style.display = 'flex';
         updateLevelDisplay();
         updateMathQuestionDisplay();
@@ -524,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const draggedMoney = document.querySelector('.money.dragging');
         if (draggedMoney && paidMoney.length === 0) {
             const value = parseInt(draggedMoney.getAttribute('data-value'));
-            if (value <= correctAnswer) return; // Only accept money greater than correctAnswer
+            if (value <= correctAnswer) return; // 只接受大於 correctAnswer 的金額
             draggedMoney.style.display = 'none';
             draggedMoney.setAttribute('draggable', 'false');
 
@@ -552,14 +611,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
             paidMoney.push({ value });
             changeAnswer = value - correctAnswer;
-            document.querySelector('#box').style.display = 'none';
+            document.querySelector('.box-area').style.display = 'none';
+            document.querySelector('.kid-area').style.display = 'flex';
             document.querySelector('.change-area').style.display = 'flex';
-            document.querySelector('.kid-area').style.display = 'block';
             updateCashCalculator();
             const changePrompt = langDict[currentLanguage].changePrompt;
             speak(changePrompt);
+            showChangeGuideLine();
             document.getElementById('guide-line').style.display = 'none';
             console.log('Money dragged to hamster:', { value, changeAnswer });
+        }
+    });
+
+    // 拖曳到小朋友（找零）
+    const kid = document.querySelector('.kid-area');
+    kid.addEventListener('dragover', e => e.preventDefault());
+    kid.addEventListener('drop', e => {
+        e.preventDefault();
+        const draggedChange = document.querySelector('.change-money.dragging');
+        if (draggedChange && paidMoney.length > 0) { // 確保已支付金錢
+            const value = parseInt(draggedChange.getAttribute('data-value'));
+            const hamsterChange = document.createElement('img');
+            hamsterChange.src = draggedChange.src;
+            hamsterChange.className = 'hamster-nut';
+            hamsterChange.setAttribute('data-value', value);
+            hamsterChange.setAttribute('draggable', 'true');
+            document.getElementById('hamster-nuts').appendChild(hamsterChange);
+
+            hamsterChange.addEventListener('dragstart', () => {
+                hamsterChange.classList.add('dragging');
+                document.getElementById('guide-line').style.display = 'block';
+                requestAnimationFrame(() => updateGuideLine({ clientX: hamsterChange.getBoundingClientRect().left, clientY: hamsterChange.getBoundingClientRect().top }, document.querySelector('.change-area')));
+            });
+
+            hamsterChange.addEventListener('drag', (e) => {
+                updateGuideLine(e, document.querySelector('.change-area'));
+            });
+
+            hamsterChange.addEventListener('dragend', () => {
+                hamsterChange.classList.remove('dragging');
+                document.getElementById('guide-line').style.display = 'none';
+            });
+
+            paidMoney.push({ value });
+            updateCashCalculator();
+            document.getElementById('guide-line').style.display = 'none';
+            console.log('Change dragged to kid:', { value, paidMoney });
         }
     });
 
@@ -581,8 +678,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateCashRegister();
                 updateMathQuestionDisplay();
                 document.querySelector('.change-area').style.display = 'none';
+                document.querySelector('.box-area').style.display = 'flex';
                 document.querySelector('.kid-area').style.display = 'none';
                 document.querySelector('#box').style.display = 'block';
+                document.querySelector('#box-nuts').style.display = 'flex';
                 isAnswerCorrect = false;
                 document.getElementById('guide-line').style.display = 'none';
                 console.log('Item dragged back to nut-area:', boxItems);
@@ -598,18 +697,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const draggedMoney = document.querySelector('.hamster-nut.dragging');
         if (draggedMoney) {
             const value = parseInt(draggedMoney.getAttribute('data-value'));
-            const originalMoney = document.querySelector(`.money[data-value="${value}"]`);
+            const originalMoney = document.querySelector(`.money[data-value="${value}"]`) || document.querySelector(`.change-money[data-value="${value}"]`);
             if (originalMoney) {
                 originalMoney.style.display = 'block';
                 originalMoney.setAttribute('draggable', 'true');
                 draggedMoney.remove();
-                paidMoney = [];
-                document.querySelector('.change-area').style.display = 'none';
-                document.querySelector('.kid-area').style.display = 'none';
-                document.querySelector('#box').style.display = 'block';
+                paidMoney = paidMoney.filter(money => money.value !== value);
+                document.querySelector('.change-area').style.display = paidMoney.length > 0 ? 'flex' : 'none';
+                document.querySelector('.box-area').style.display = paidMoney.length > 0 ? 'none' : 'flex';
+                document.querySelector('.kid-area').style.display = paidMoney.length > 0 ? 'flex' : 'none';
+                document.querySelector('#box').style.display = paidMoney.length > 0 ? 'none' : 'block';
+                document.querySelector('#box-nuts').style.display = paidMoney.length > 0 ? 'none' : 'flex';
                 updateCashCalculator();
                 initializeDragListeners();
-                showMoneyGuideLine();
+                if (paidMoney.length > 0) {
+                    showChangeGuideLine();
+                } else {
+                    showMoneyGuideLine();
+                }
                 document.getElementById('guide-line').style.display = 'none';
                 console.log('Money dragged back to money-area:', paidMoney);
             }
@@ -634,9 +739,9 @@ document.addEventListener('DOMContentLoaded', () => {
             feedback.className = 'feedback correct';
             audio.src = 'assets/audio/suc.mp3';
             audio.play();
-            document.querySelector('#box').style.display = 'none';
+            document.querySelector('.box-area').style.display = 'none';
+            document.querySelector('.kid-area').style.display = 'flex';
             document.querySelector('.money-area').style.display = 'flex';
-            document.querySelector('.kid-area').style.display = 'none';
             console.log('Money Area Display:', document.querySelector('.money-area').style.display, document.querySelector('.money-area').getBoundingClientRect());
             speak(langDict[currentLanguage].moneyPrompt);
             document.getElementById('answer-box').textContent = '';
@@ -666,9 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const audio = new Audio();
         totalQuestions++;
 
-        console.log('Checking change answer:', { number, changeAnswer });
+        const initialPaid = paidMoney.length > 0 ? paidMoney[0].value : 0; // 首次支付的金額
+        const totalChange = paidMoney.reduce((sum, money) => sum + money.value, 0) - initialPaid;
 
-        if (number === changeAnswer) {
+        console.log('Checking change answer:', { number, changeAnswer, totalChange, initialPaid });
+
+        if (number === changeAnswer && totalChange === changeAnswer) {
             correctQuestions++;
             feedback.textContent = langDict[currentLanguage].correct;
             feedback.className = 'feedback correct';
